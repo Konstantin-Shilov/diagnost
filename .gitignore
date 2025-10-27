@@ -1,0 +1,19 @@
+# dependencies
+/node_modules
+/coverage
+/build
+/data
+/temp
+
+/.env
+/.cert
+/.idea
+/.vscode
+.editorconfig
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.DS_Store

@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "date_of_creation": "27.09.2025",
+  "first_release_date": "27.09.2025",
+  "description": "app",
+  "platforms": [
+    "browser", "iOS", "Android", "Windows", "MacOS"
+  ],
+  "languages": [
+    "TypesScript",
+    "JavaScript",
+    "CSS",
+    "HTML"
+  ],
+  "distribution_size_mb": 2,
+  "author": [
+    "Konstantin Shilov"
+  ],
+  "dependencies": [
+    "node.js",
+    "npm"
+  ],
+  "composite_components": [
+    "react.js",
+    "vite",
+    "biome"
+  ]
+}

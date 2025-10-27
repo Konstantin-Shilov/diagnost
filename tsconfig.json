@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "rootDir": "./",
+    "baseUrl": "./src",
+
+    "target": "es5",
+    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+
+    "noImplicitAny": true,
+    "strict": true,
+    "strictNullChecks": true,
+
+    "skipLibCheck": true,
+
+    "sourceMap": true,
+
+    "jsx": "react-jsx",
+
+    "resolveJsonModule": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "types": ["vitest/globals", "node"],
+  },
+
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
