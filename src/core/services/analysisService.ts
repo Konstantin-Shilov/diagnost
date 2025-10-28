@@ -11,9 +11,47 @@ export class AnalysisService {
     let totalScore = 0;
 
     for (const response of responses) {
-      for (const answer of response.answers) {
-        if (typeof answer.value === "number") {
-          totalScore += answer.value;
+      if (response.blockId === "symptoms") {
+        // 1. Подсчёт баллов по симптомам (0-3 за каждый)
+        for (const answer of response.answers) {
+          if (typeof answer.value === "number") {
+            totalScore += answer.value;
+          }
+        }
+      } else if (response.blockId === "state") {
+        // 2. Определение состояния
+        let energyScore = 0;
+        let tensionScore = 0;
+        let moodScore = 0;
+
+        for (const answer of response.answers) {
+          if (typeof answer.value === "number") {
+            if (answer.questionId === "state_energy") {
+              // Энергия: ≤3 → +3, 4-6 → +2, 7-10 → +1
+              if (answer.value <= 3) energyScore = 3;
+              else if (answer.value <= 6) energyScore = 2;
+              else energyScore = 1;
+            } else if (answer.questionId === "state_tension") {
+              // Напряжение: ≥8 → +3, 6-7 → +2, 1-5 → +1
+              if (answer.value >= 8) tensionScore = 3;
+              else if (answer.value >= 6) tensionScore = 2;
+              else tensionScore = 1;
+            } else if (answer.questionId === "state_mood") {
+              // Настроение (% негативных эмоций): ≥70% → +3, 50-69% → +2, <50% → +1
+              if (answer.value >= 70) moodScore = 3;
+              else if (answer.value >= 50) moodScore = 2;
+              else moodScore = 1;
+            }
+          }
+        }
+
+        totalScore += energyScore + tensionScore + moodScore;
+      } else if (response.blockId === "internal_causes") {
+        // 3. Подсчёт баллов по внутренним причинам (0-2 за каждую)
+        for (const answer of response.answers) {
+          if (typeof answer.value === "number") {
+            totalScore += answer.value;
+          }
         }
       }
     }
@@ -24,8 +62,8 @@ export class AnalysisService {
   private static getBurnoutLevel(score: number, rules: ScoringRules): BurnoutLevel {
     const { burnoutLevels } = rules;
 
-    let level: BurnoutLevel["level"] = "low";
-    let description = "";
+    let level: BurnoutLevel["level"];
+    let description: string;
 
     if (score >= burnoutLevels.critical.min) {
       level = "critical";
@@ -49,7 +87,7 @@ export class AnalysisService {
         "Низкий уровень выгорания. Ваше состояние в пределах нормы, продолжайте следить за балансом.";
     }
 
-    const maxTotalScore = 150; // Based on our survey configuration
+    const maxTotalScore = 69; // Based on our new survey configuration: 10*3 + 3*3 + 15*2 = 30+9+30 = 69
 
     return {
       level,
@@ -66,68 +104,68 @@ export class AnalysisService {
     if (score >= greenbergStages[5].min) {
       return {
         stage: 5,
-        name: "Привычное выгорание",
-        description: "Полное физическое и эмоциональное истощение",
+        name: "Пробивание стены",
+        description: "Полное истощение, психосоматика, эмоциональная пустота",
         characteristics: [
-          "Хроническое истощение",
-          "Полная апатия к работе",
-          "Физические симптомы",
-          "Социальная изоляция",
+          "Полное истощение",
+          "Психосоматические заболевания",
+          "Эмоциональная пустота",
           "Серьезные проблемы со здоровьем",
+          "Социальная изоляция",
         ],
       };
     }
     if (score >= greenbergStages[4].min) {
       return {
         stage: 4,
-        name: "Выгорание",
-        description: "Апатия, цинизм и желание избежать работы",
+        name: "Кризис",
+        description: "Истощение, бессонница, тревога, конфликты",
         characteristics: [
-          "Апатия и равнодушие",
-          "Цинизм",
+          "Истощение",
+          "Бессонница",
+          "Тревога",
+          "Конфликты",
           "Снижение продуктивности",
-          "Избегание обязанностей",
-          "Проблемы с концентрацией",
         ],
       };
     }
     if (score >= greenbergStages[3].min) {
       return {
         stage: 3,
-        name: "Хроническое недовольство",
-        description: "Раздражительность и недовольство работой",
+        name: "Хронические симптомы",
+        description: "Болезни, апатия, утрата интереса, формальность",
         characteristics: [
-          "Постоянное раздражение",
-          "Недовольство условиями",
-          "Конфликты с коллегами",
+          "Болезни",
+          "Апатия",
+          "Утрата интереса",
+          "Формальность",
           "Снижение качества работы",
-          "Частые жалобы",
         ],
       };
     }
     if (score >= greenbergStages[2].min) {
       return {
         stage: 2,
-        name: "Застой",
-        description: "Снижение энтузиазма и мотивации",
+        name: "Недостаток топлива",
+        description: "Хроническая усталость, раздражение, компенсация стимуляторами",
         characteristics: [
-          "Потеря интереса",
+          "Хроническая усталость",
+          "Раздражение",
+          "Компенсация стимуляторами",
           "Снижение энтузиазма",
-          "Рутинность в работе",
-          "Уменьшение креативности",
-          "Первые признаки усталости",
+          "Первые признаки выгорания",
         ],
       };
     }
     return {
       stage: 1,
       name: "Медовый месяц",
-      description: "Высокая мотивация и энергия",
+      description: "Высокая энергия, лёгкое перенапряжение, энтузиазм",
       characteristics: [
-        "Высокая мотивация",
+        "Высокая энергия",
+        "Лёгкое перенапряжение",
         "Энтузиазм",
         "Готовность к переработкам",
-        "Оптимизм",
         "Высокая продуктивность",
       ],
     };
