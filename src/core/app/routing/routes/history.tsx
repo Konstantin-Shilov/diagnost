@@ -247,7 +247,10 @@ function HistoryPage() {
                   }}
                 >
                   <Link
-                    to={`/results/${result.id}`}
+                    params={{
+                      id: result.id,
+                    }}
+                    to="/results/$id"
                     style={{
                       display: "inline-block",
                       padding: "8px 16px",
