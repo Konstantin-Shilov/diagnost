@@ -15,8 +15,11 @@ export default defineConfig(async ({ mode }) => {
   const isDev = mode === "development";
   const publicDir = "src/common/shared/public";
 
+  // Проверяем, что это билд для GitHub Pages
+  const isGitHubPagesBuild = process.env.GITHUB_PAGES === "true" || process.env.GITHUB_ACTIONS || process.env.CI;
+
   return {
-    base: isDev ? "/" : "/diagnost/",
+    base: isGitHubPagesBuild ? "/diagnost/" : "/",
     publicDir,
     plugins: [
       svgr({
