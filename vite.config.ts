@@ -16,7 +16,8 @@ export default defineConfig(async ({ mode }) => {
   const publicDir = "src/common/shared/public";
 
   // Проверяем, что это билд для GitHub Pages
-  const isGitHubPagesBuild = process.env.GITHUB_PAGES === "true" || process.env.GITHUB_ACTIONS || process.env.CI;
+  const isGitHubPagesBuild =
+    process.env.GITHUB_PAGES === "true" || process.env.GITHUB_ACTIONS || process.env.CI;
 
   return {
     base: isGitHubPagesBuild ? "/diagnost/" : "/",
