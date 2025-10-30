@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Text, Title } from "@/components/Typography";
+import styles from "./about.module.css";
+
 export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
@@ -7,66 +10,66 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <div>
-      <h1>О диагностике эмоционального выгорания</h1>
+      <Title size="xl" level="h1" semantic="accent">
+        О диагностике эмоционального выгорания
+      </Title>
 
       <section>
-        <h2>Что такое эмоциональное выгорание?</h2>
-        <p>
+        <Title size="lg" level="h2" variant="primary">
+          Что такое эмоциональное выгорание?
+        </Title>
+        <Text size="lg" variant="secondary">
           Эмоциональное выгорание — это состояние физического, эмоционального и ментального
           истощения, которое возникает в результате длительного воздействия стрессовых ситуаций.
-        </p>
+        </Text>
       </section>
 
       <section>
-        <h2>Модель Гринберга</h2>
-        <p>
+        <Title size="lg" level="h2" variant="primary">
+          Модель Гринберга
+        </Title>
+        <Text size="lg" variant="secondary">
           Данная диагностика основана на пятистадийной модели эмоционального выгорания по Гринбергу:
-        </p>
+        </Text>
         <ol>
           <li>
-            <strong>Стадия 1:</strong> «Медовый месяц» - высокая мотивация
+            <Text as="span"><strong>Стадия 1:</strong> «Медовый месяц» - высокая мотивация</Text>
           </li>
           <li>
-            <strong>Стадия 2:</strong> Застой - снижение энтузиазма
+            <Text as="span"><strong>Стадия 2:</strong> Застой - снижение энтузиазма</Text>
           </li>
           <li>
-            <strong>Стадия 3:</strong> Хроническое недовольство - раздражительность
+            <Text as="span"><strong>Стадия 3:</strong> Хроническое недовольство - раздражительность</Text>
           </li>
           <li>
-            <strong>Стадия 4:</strong> Выгорание - апатия и цинизм
+            <Text as="span"><strong>Стадия 4:</strong> Выгорание - апатия и цинизм</Text>
           </li>
           <li>
-            <strong>Стадия 5:</strong> Привычное выгорание - полное истощение
+            <Text as="span"><strong>Стадия 5:</strong> Привычное выгорание - полное истощение</Text>
           </li>
         </ol>
       </section>
 
       <section>
-        <h2>⚠️ Важное предупреждение</h2>
-        <div
-          style={{
-            background: "#fff3cd",
-            border: "1px solid #ffeaa7",
-            padding: "20px",
-            borderRadius: "8px",
-            marginTop: "20px",
-          }}
-        >
-          <p>
+        <Title size="lg" level="h2" semantic="warning">
+          ⚠️ Важное предупреждение
+        </Title>
+        <div className={styles.warning}>
+          <Text>
             <strong>ВНИМАНИЕ:</strong>
-          </p>
-          <p>
+          </Text>
+          <Text>
             Данный сервис НЕ ЯВЛЯЕТСЯ медицинским инструментом и не предназначен для постановки
             диагноза или замены профессиональной медицинской консультации.
-          </p>
-          <p>
+          </Text>
+          <Text>
             Результаты носят исключительно информационный характер и предназначены для самоанализа и
             общего понимания вашего эмоционального состояния.
-          </p>
-          <p>
+          </Text>
+          <Text>
             При наличии серьезных проблем с психическим здоровьем обратитесь к квалифицированному
             специалисту.
-          </p>
+          </Text>
         </div>
       </section>
     </div>

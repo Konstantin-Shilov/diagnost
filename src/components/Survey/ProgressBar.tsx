@@ -1,5 +1,8 @@
 import React from "react";
 
+import { Text } from "@/components/Typography";
+import styles from "./ProgressBar.module.css";
+
 interface ProgressBarProps {
   progress: number;
   currentBlock: string;
@@ -14,37 +17,20 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   currentBlockIndex,
 }) => {
   return (
-    <div style={{ marginBottom: "30px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "10px",
-        }}
-      >
-        <span style={{ fontSize: "14px", color: "#666" }}>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <Text size="sm" variant="tertiary" as="span" className={styles.blockInfo}>
           Блок {currentBlockIndex + 1} из {totalBlocks}: {currentBlock}
-        </span>
-        <span style={{ fontSize: "14px", fontWeight: "bold", color: "#007bff" }}>{progress}%</span>
+        </Text>
+        <Text size="sm" semantic="accent" as="span" className={styles.progressText}>
+          {progress}%
+        </Text>
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          height: "8px",
-          backgroundColor: "#e9ecef",
-          borderRadius: "4px",
-          overflow: "hidden",
-        }}
-      >
+      <div className={styles.progressBarContainer}>
         <div
-          style={{
-            width: `${progress}%`,
-            height: "100%",
-            backgroundColor: "#007bff",
-            transition: "width 0.3s ease",
-          }}
+          className={styles.progressBarFill}
+          style={{ width: `${progress}%` }}
         />
       </div>
     </div>

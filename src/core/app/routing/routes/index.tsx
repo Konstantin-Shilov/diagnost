@@ -1,90 +1,63 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { Text, Title } from "@/components/Typography";
+import styles from "./index.module.css";
+
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
 function HomePage() {
   return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Диагностика эмоционального выгорания</h1>
+    <div className={styles.container}>
+      <Title size="xl" level="h1" semantic="accent">
+        Диагностика эмоционального выгорания
+      </Title>
 
-      <p>
+      <Text size="lg" variant="secondary" className={styles.description}>
         Добро пожаловать в сервис для диагностики эмоционального выгорания. Этот инструмент поможет
         вам оценить ваше текущее состояние и определить уровень эмоционального выгорания.
-      </p>
+      </Text>
 
-      <div style={{ marginTop: "30px", display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <div className={styles.buttonGroup}>
         <Link
           to="/survey"
-          style={{
-            display: "inline-block",
-            padding: "15px 30px",
-            backgroundColor: "#007bff",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "8px",
-            fontSize: "18px",
-            fontWeight: "bold",
-          }}
+          className={styles.primaryButton}
         >
           Начать диагностику
         </Link>
 
         <Link
           to="/history"
-          style={{
-            display: "inline-block",
-            padding: "15px 30px",
-            backgroundColor: "#6c757d",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "8px",
-            fontSize: "16px",
-          }}
+          className={styles.secondaryButton}
         >
           История результатов
         </Link>
 
         <Link
           to="/about"
-          style={{
-            display: "inline-block",
-            padding: "15px 30px",
-            backgroundColor: "#28a745",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "8px",
-            fontSize: "16px",
-          }}
+          className={styles.successButton}
         >
           О диагностике
         </Link>
       </div>
 
-      <section style={{ marginTop: "40px" }}>
-        <h2>Как это работает?</h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "20px",
-            marginTop: "20px",
-          }}
-        >
-          <div style={{ padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
-            <h3>1. Опрос</h3>
-            <p>Ответьте на вопросы по 5 блокам: симптомы, состояние, внутренние причины</p>
+      <section className={styles.section}>
+        <Title size="lg" level="h2" variant="primary">Как это работает?</Title>
+        <div className={styles.cardGrid}>
+          <div className={styles.card}>
+            <Title size="md" level="h3" semantic="accent">1. Опрос</Title>
+            <Text variant="secondary">Ответьте на вопросы по 5 блокам: симптомы, состояние, внутренние причины</Text>
           </div>
 
-          <div style={{ padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
-            <h3>2. Анализ</h3>
-            <p>Система автоматически проанализирует ваши ответы и определит уровень выгорания</p>
+          <div className={styles.card}>
+            <Title size="md" level="h3" semantic="accent">2. Анализ</Title>
+            <Text variant="secondary">Система автоматически проанализирует ваши ответы и определит уровень выгорания</Text>
           </div>
 
-          <div style={{ padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
-            <h3>3. Результаты</h3>
-            <p>Получите детальный отчет с рекомендациями и возможностью сохранения в PDF</p>
+          <div className={styles.card}>
+            <Title size="md" level="h3" semantic="accent">3. Результаты</Title>
+            <Text variant="secondary">Получите детальный отчет с рекомендациями и возможностью сохранения в PDF</Text>
           </div>
         </div>
       </section>

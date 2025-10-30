@@ -1,0 +1,225 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  margin: 0;
+  color: #007bff;
+}
+
+.headerActions {
+  display: flex;
+  gap: 10px;
+}
+
+.clearButton {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+.emptyTitle {
+  margin: 0 0 15px 0;
+  color: #6c757d;
+}
+
+.emptyText {
+  margin: 0 0 25px 0;
+  color: #6c757d;
+}
+
+.startButton {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.resultsGrid {
+  display: grid;
+  gap: 20px;
+}
+
+.resultCard {
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.resultDate {
+  margin: 0;
+  font-size: 18px;
+}
+
+.levelBadge {
+  padding: 4px 12px;
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.stageBadge {
+  padding: 4px 12px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.resultStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.scoreText {
+  font-weight: bold;
+}
+
+.resultDescription {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.resultActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detailsButton {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.deleteButton {
+  padding: 8px 16px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.summary {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+}
+
+.summaryText {
+  margin: 0 0 15px 0;
+  color: #6c757d;
+}
+
+.retryButton {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Динамические цвета уровней выгорания */
+.levelBadge.low {
+  background-color: #28a745;
+}
+
+.levelBadge.moderate {
+  background-color: #ffc107;
+}
+
+.levelBadge.high {
+  background-color: #fd7e14;
+}
+
+.levelBadge.severe {
+  background-color: #dc3545;
+}
+
+.levelBadge.critical {
+  background-color: #6f42c1;
+}
+
+.levelBadge.default {
+  background-color: #6c757d;
+}
+
+.scoreText.low {
+  color: #28a745;
+}
+
+.scoreText.moderate {
+  color: #ffc107;
+}
+
+.scoreText.high {
+  color: #fd7e14;
+}
+
+.scoreText.severe {
+  color: #dc3545;
+}
+
+.scoreText.critical {
+  color: #6f42c1;
+}
+
+.scoreText.default {
+  color: #6c757d;
+}

@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import React, { useEffect } from "react";
 
+import { Text, Title } from "@/components/Typography";
 import { defaultSurveyConfig } from "@/core/data/surveyConfig";
 import { AnalysisService } from "@/core/services/analysisService";
 import { useResultsStore, useSurveyStore } from "@/core/store";
@@ -8,6 +9,7 @@ import type { Answer } from "@/core/types";
 
 import { ProgressBar } from "./ProgressBar";
 import { ScaleQuestion } from "./ScaleQuestion";
+import styles from "./SurveyContainer.module.css";
 
 export const SurveyContainer: React.FC = () => {
   const navigate = useNavigate();
@@ -60,14 +62,14 @@ export const SurveyContainer: React.FC = () => {
   }, [isCompleted, config, responses, navigate, setResult, setCurrentResult, saveResult]);
 
   if (!config) {
-    return <div>Загрузка...</div>;
+    return <Text>Загрузка...</Text>;
   }
 
   const currentBlock = getCurrentBlock();
   const currentQuestion = getCurrentQuestion();
 
   if (!currentBlock || !currentQuestion) {
-    return <div>Ошибка загрузки вопроса</div>;
+    return <Text semantic="negative">Ошибка загрузки вопроса</Text>;
   }
 
   const getCurrentAnswer = (): number | undefined => {
@@ -102,13 +104,7 @@ export const SurveyContainer: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "0 auto",
-        padding: "20px",
-      }}
-    >
+    <div className={styles.container}>
       <ProgressBar
         progress={getProgress()}
         currentBlock={currentBlock.title}
@@ -116,45 +112,23 @@ export const SurveyContainer: React.FC = () => {
         currentBlockIndex={currentBlockIndex}
       />
 
-      <div
-        style={{
-          backgroundColor: "#f8f9fa",
-          padding: "30px",
-          borderRadius: "12px",
-          marginBottom: "30px",
-        }}
-      >
-        <div style={{ marginBottom: "20px" }}>
-          <h2 style={{ margin: "0 0 10px 0", color: "#007bff" }}>{currentBlock.title}</h2>
+      <div className={styles.blockContainer}>
+        <div className={styles.blockHeader}>
+          <Title size="lg" level="h2" semantic="accent" className={styles.blockTitle}>
+            {currentBlock.title}
+          </Title>
           {currentBlock.description && (
-            <p style={{ margin: "0", color: "#666", fontSize: "16px" }}>
+            <Text variant="secondary" className={styles.blockDescription}>
               {currentBlock.description}
-            </p>
+            </Text>
           )}
         </div>
 
-        <div
-          style={{
-            backgroundColor: "white",
-            padding: "25px",
-            borderRadius: "8px",
-            border: "1px solid #dee2e6",
-          }}
-        >
-          <div style={{ marginBottom: "20px" }}>
-            <span
-              style={{
-                display: "inline-block",
-                backgroundColor: "#007bff",
-                color: "white",
-                padding: "5px 12px",
-                borderRadius: "20px",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
+        <div className={styles.questionCard}>
+          <div className={styles.questionHeader}>
+            <Text size="sm" as="span" className={styles.questionBadge}>
               Вопрос {currentQuestionIndex + 1} из {currentBlock.questions.length}
-            </span>
+            </Text>
           </div>
 
           <ScaleQuestion
@@ -165,61 +139,22 @@ export const SurveyContainer: React.FC = () => {
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: "20px",
-        }}
-      >
-        <button
-          onClick={handlePrevious}
-          disabled={!canGoPrevious()}
-          style={{
-            padding: "12px 24px",
-            borderRadius: "8px",
-            border: "2px solid #6c757d",
-            backgroundColor: "white",
-            color: "#6c757d",
-            fontSize: "16px",
-            cursor: canGoPrevious() ? "pointer" : "not-allowed",
-            opacity: canGoPrevious() ? 1 : 0.5,
-            transition: "all 0.2s ease",
-          }}
-        >
+      <div className={styles.navigation}>
+        <button onClick={handlePrevious} disabled={!canGoPrevious()} className={styles.backButton}>
           ← Назад
         </button>
 
         <button
           onClick={handleNext}
           disabled={!canGoNext()}
-          style={{
-            padding: "12px 24px",
-            borderRadius: "8px",
-            border: "2px solid #007bff",
-            backgroundColor: canGoNext() ? "#007bff" : "#e9ecef",
-            color: canGoNext() ? "white" : "#6c757d",
-            fontSize: "16px",
-            fontWeight: "bold",
-            cursor: canGoNext() ? "pointer" : "not-allowed",
-            transition: "all 0.2s ease",
-          }}
+          className={`${styles.nextButton} ${canGoNext() ? styles.enabled : ""}`}
         >
           {isLastQuestion() ? "Завершить" : "Далее"} →
         </button>
       </div>
 
       {/* Debug info - remove in production */}
-      <div
-        style={{
-          marginTop: "30px",
-          padding: "15px",
-          backgroundColor: "#f1f3f4",
-          borderRadius: "8px",
-          fontSize: "12px",
-          color: "#666",
-        }}
-      >
+      <div className={styles.debug}>
         <strong>Debug:</strong> Block {currentBlockIndex + 1}/{config.blocks.length}, Question{" "}
         {currentQuestionIndex + 1}/{currentBlock.questions.length}, Progress: {getProgress()}%
       </div>

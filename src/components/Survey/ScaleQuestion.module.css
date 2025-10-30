@@ -1,0 +1,58 @@
+.container {
+  margin-bottom: 30px;
+}
+
+.questionText {
+  margin-bottom: 15px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.scaleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.scaleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.scaleLabel {
+  font-size: 14px;
+  color: #666;
+  min-width: 120px;
+}
+
+.scaleLabelEnd {
+  text-align: right;
+}
+
+.scaleOptions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex: 1;
+}
+
+.scaleOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.scaleInput {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.scaleValue {
+  font-size: 14px;
+  font-weight: bold;
+}

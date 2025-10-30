@@ -1,0 +1,100 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.blockContainer {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.blockHeader {
+  margin-bottom: 20px;
+}
+
+.blockTitle {
+  margin: 0 0 10px 0;
+  color: #007bff;
+}
+
+.blockDescription {
+  margin: 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.questionCard {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.questionHeader {
+  margin-bottom: 20px;
+}
+
+.questionBadge {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.backButton {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 2px solid #6c757d;
+  background-color: white;
+  color: #6c757d;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.nextButton {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nextButton.enabled {
+  background-color: #007bff;
+  color: white;
+}
+
+.nextButton:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.debug {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f1f3f4;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #666;
+}

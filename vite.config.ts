@@ -12,12 +12,10 @@ import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(async ({ mode }) => {
-  const isDev = mode === "development";
+  // const isDev = mode === "development";
   const publicDir = "src/common/shared/public";
 
-  // Проверяем, что это билд для GitHub Pages
-  const isGitHubPagesBuild =
-    process.env.GITHUB_PAGES === "true" || process.env.GITHUB_ACTIONS || process.env.CI;
+  const isGitHubPagesBuild = process.env.GITHUB_PAGES === "true";
 
   return {
     base: isGitHubPagesBuild ? "/diagnost/" : "/",
@@ -73,7 +71,7 @@ export default defineConfig(async ({ mode }) => {
       port: 9000,
       cors: true,
       hmr: {
-        protocol: "wss",
+        protocol: "ws",
         host: "localhost",
       },
     },

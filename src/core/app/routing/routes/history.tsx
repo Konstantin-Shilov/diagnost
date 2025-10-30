@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { useResultsStore } from "@/core/store";
+import { Text, Title } from "@/components/Typography";
+import styles from "./history.module.css";
 
 export const Route = createFileRoute("/history")({
   component: HistoryPage,
@@ -36,20 +38,20 @@ function HistoryPage() {
     }
   };
 
-  const getBurnoutColor = (level: string) => {
+  const getBurnoutLevelClass = (level: string) => {
     switch (level) {
       case "low":
-        return "#28a745";
+        return styles.low;
       case "moderate":
-        return "#ffc107";
+        return styles.moderate;
       case "high":
-        return "#fd7e14";
+        return styles.high;
       case "severe":
-        return "#dc3545";
+        return styles.severe;
       case "critical":
-        return "#6f42c1";
+        return styles.critical;
       default:
-        return "#6c757d";
+        return styles.default;
     }
   };
 
@@ -68,36 +70,17 @@ function HistoryPage() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        padding: "20px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "30px",
-        }}
-      >
-        <h1 style={{ margin: "0", color: "#007bff" }}>История прохождений</h1>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <Title size="xl" level="h1" semantic="accent" className={styles.title}>
+          История прохождений
+        </Title>
 
         {results.length > 0 && (
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div className={styles.headerActions}>
             <button
               onClick={handleClearAll}
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "#dc3545",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
+              className={styles.clearButton}
             >
               Очистить всё
             </button>
@@ -106,177 +89,86 @@ function HistoryPage() {
       </div>
 
       {results.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "60px 20px",
-            backgroundColor: "#f8f9fa",
-            borderRadius: "12px",
-          }}
-        >
-          <h3 style={{ margin: "0 0 15px 0", color: "#6c757d" }}>История пуста</h3>
-          <p style={{ margin: "0 0 25px 0", color: "#6c757d" }}>
+        <div className={styles.emptyState}>
+          <Title size="lg" level="h3" variant="primary" className={styles.emptyTitle}>
+            История пуста
+          </Title>
+          <Text variant="secondary" className={styles.emptyText}>
             Вы еще не проходили диагностику эмоционального выгорания
-          </p>
+          </Text>
           <Link
             to="/survey"
-            style={{
-              display: "inline-block",
-              padding: "12px 24px",
-              backgroundColor: "#007bff",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "bold",
-            }}
+            className={styles.startButton}
           >
             Пройти диагностику
           </Link>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gap: "20px",
-          }}
-        >
+        <div className={styles.resultsGrid}>
           {results
             .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
             .map((result) => (
               <div
                 key={result.id}
-                style={{
-                  padding: "20px",
-                  backgroundColor: "white",
-                  border: "1px solid #dee2e6",
-                  borderRadius: "12px",
-                  display: "grid",
-                  gridTemplateColumns: "1fr auto",
-                  gap: "20px",
-                  alignItems: "center",
-                }}
+                className={styles.resultCard}
               >
                 <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <h3 style={{ margin: "0", fontSize: "18px" }}>
+                  <div className={styles.resultHeader}>
+                    <Title size="md" level="h3" variant="primary" className={styles.resultDate}>
                       {formatDate(result.timestamp)}
-                    </h3>
+                    </Title>
 
-                    <span
-                      style={{
-                        padding: "4px 12px",
-                        backgroundColor: getBurnoutColor(result.burnoutLevel.level),
-                        color: "white",
-                        borderRadius: "20px",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                        textTransform: "uppercase",
-                      }}
+                    <Text
+                      as="span"
+                      className={`${styles.levelBadge} ${getBurnoutLevelClass(result.burnoutLevel.level)}`}
                     >
                       {getBurnoutLevelText(result.burnoutLevel.level)}
-                    </span>
+                    </Text>
 
-                    <span
-                      style={{
-                        padding: "4px 12px",
-                        backgroundColor: "#007bff",
-                        color: "white",
-                        borderRadius: "20px",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
+                    <Text as="span" className={styles.stageBadge}>
                       Стадия {result.greenbergStage.stage}
-                    </span>
+                    </Text>
                   </div>
 
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                      gap: "15px",
-                      marginBottom: "10px",
-                    }}
-                  >
+                  <div className={styles.resultStats}>
                     <div>
-                      <strong>Общий балл:</strong>
+                      <Text as="strong">Общий балл:</Text>
                       <br />
-                      <span
-                        style={{
-                          color: getBurnoutColor(result.burnoutLevel.level),
-                          fontWeight: "bold",
-                        }}
+                      <Text
+                        as="span"
+                        className={`${styles.scoreText} ${getBurnoutLevelClass(result.burnoutLevel.level)}`}
                       >
                         {result.totalScore}/{result.maxTotalScore} ({result.burnoutLevel.percentage}
                         %)
-                      </span>
+                      </Text>
                     </div>
 
                     <div>
-                      <strong>Стадия Гринберга:</strong>
+                      <Text as="strong">Стадия Гринберга:</Text>
                       <br />
-                      {result.greenbergStage.name}
+                      <Text as="span">{result.greenbergStage.name}</Text>
                     </div>
                   </div>
 
-                  <p
-                    style={{
-                      margin: "0",
-                      color: "#666",
-                      fontSize: "14px",
-                      lineHeight: "1.4",
-                    }}
-                  >
+                  <Text variant="secondary" className={styles.resultDescription}>
                     {result.burnoutLevel.description}
-                  </p>
+                  </Text>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
+                <div className={styles.resultActions}>
                   <Link
                     params={{
                       id: result.id,
                     }}
                     to="/results/$id"
-                    style={{
-                      display: "inline-block",
-                      padding: "8px 16px",
-                      backgroundColor: "#007bff",
-                      color: "white",
-                      textDecoration: "none",
-                      borderRadius: "6px",
-                      fontSize: "14px",
-                      textAlign: "center",
-                      fontWeight: "bold",
-                    }}
+                    className={styles.detailsButton}
                   >
                     Подробнее
                   </Link>
 
                   <button
                     onClick={() => handleDeleteResult(result.id)}
-                    style={{
-                      padding: "8px 16px",
-                      backgroundColor: "#6c757d",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      fontSize: "14px",
-                      cursor: "pointer",
-                    }}
+                    className={styles.deleteButton}
                   >
                     Удалить
                   </button>
@@ -287,30 +179,13 @@ function HistoryPage() {
       )}
 
       {results.length > 0 && (
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "40px",
-            padding: "20px",
-            backgroundColor: "#f8f9fa",
-            borderRadius: "12px",
-          }}
-        >
-          <p style={{ margin: "0 0 15px 0", color: "#6c757d" }}>
+        <div className={styles.summary}>
+          <Text variant="tertiary" className={styles.summaryText}>
             Всего прохождений: {results.length}
-          </p>
+          </Text>
           <Link
             to="/survey"
-            style={{
-              display: "inline-block",
-              padding: "12px 24px",
-              backgroundColor: "#28a745",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "bold",
-            }}
+            className={styles.retryButton}
           >
             Пройти диагностику снова
           </Link>

@@ -1,6 +1,8 @@
 import React from "react";
 
 import type { Answer, Question } from "@/core/types";
+import { Text, Title } from "@/components/Typography";
+import styles from "./ScaleQuestion.module.css";
 
 interface ScaleQuestionProps {
   question: Question;
@@ -19,44 +21,26 @@ export const ScaleQuestion: React.FC<ScaleQuestionProps> = ({ question, value, o
   };
 
   return (
-    <div style={{ marginBottom: "30px" }}>
-      <h3 style={{ marginBottom: "15px", fontSize: "18px", lineHeight: "1.4" }}>{question.text}</h3>
+    <div className={styles.container}>
+      <Title size="md" level="h3" variant="primary" className={styles.questionText}>
+        {question.text}
+      </Title>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
+      <div className={styles.scaleContainer}>
+        <div className={styles.scaleRow}>
           {scaleLabels && (
-            <span style={{ fontSize: "14px", color: "#666", minWidth: "120px" }}>
+            <Text size="sm" variant="tertiary" as="span" className={styles.scaleLabel}>
               {scaleLabels.min}
-            </span>
+            </Text>
           )}
 
-          <div
-            style={{
-              display: "flex",
-              gap: "15px",
-              justifyContent: "center",
-              flex: 1,
-            }}
-          >
+          <div className={styles.scaleOptions}>
             {Array.from({ length: scaleMax - scaleMin + 1 }, (_, index) => {
               const scaleValue = scaleMin + index;
               return (
                 <label
                   key={scaleValue}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    gap: "5px",
-                  }}
+                  className={styles.scaleOption}
                 >
                   <input
                     type="radio"
@@ -64,24 +48,20 @@ export const ScaleQuestion: React.FC<ScaleQuestionProps> = ({ question, value, o
                     value={scaleValue}
                     checked={value === scaleValue}
                     onChange={() => handleChange(scaleValue)}
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      cursor: "pointer",
-                    }}
+                    className={styles.scaleInput}
                   />
-                  <span style={{ fontSize: "14px", fontWeight: "bold" }}>{scaleValue}</span>
+                  <Text size="sm" as="span" className={styles.scaleValue}>
+                    {scaleValue}
+                  </Text>
                 </label>
               );
             })}
           </div>
 
           {scaleLabels && (
-            <span
-              style={{ fontSize: "14px", color: "#666", minWidth: "120px", textAlign: "right" }}
-            >
+            <Text size="sm" variant="tertiary" as="span" className={`${styles.scaleLabel} ${styles.scaleLabelEnd}`}>
               {scaleLabels.max}
-            </span>
+            </Text>
           )}
         </div>
       </div>

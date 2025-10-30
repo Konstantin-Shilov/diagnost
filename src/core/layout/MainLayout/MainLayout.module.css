@@ -21,3 +21,50 @@
   max-width: calc(var(--max-content-width) + 2 * var(--inline-padding));
   padding-inline: var(--inline-padding);
 }
+
+.header {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #495057;
+}
+
+.navLink.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.footer {
+  width: 100%;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+  color: #6c757d;
+  font-size: 14px;
+}
