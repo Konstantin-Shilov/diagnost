@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import React from "react";
 
 import { Text } from "@/components/Typography";
+
 import styles from "./MainLayout.module.css";
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -9,10 +10,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <nav className={styles.nav}>
-          <Link
-            to="/"
-            className={styles.logo}
-          >
+          <Link to="/" className={styles.logo}>
             <Text semantic="accent">Диагностика выгорания</Text>
           </Link>
 

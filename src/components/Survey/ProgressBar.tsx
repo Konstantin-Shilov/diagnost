@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Text } from "@/components/Typography";
+
 import styles from "./ProgressBar.module.css";
 
 interface ProgressBarProps {
@@ -28,10 +29,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       </div>
 
       <div className={styles.progressBarContainer}>
-        <div
-          className={styles.progressBarFill}
-          style={{ width: `${progress}%` }}
-        />
+        <div className={styles.progressBarFill} style={{ width: `${progress}%` }} />
       </div>
     </div>
   );

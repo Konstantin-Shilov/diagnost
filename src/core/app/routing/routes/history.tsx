@@ -1,7 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { useResultsStore } from "@/core/store";
+import { Button } from "@/components/Button";
 import { Text, Title } from "@/components/Typography";
+import { useResultsStore } from "@/core/store";
+
 import styles from "./history.module.css";
 
 export const Route = createFileRoute("/history")({
@@ -78,12 +80,9 @@ function HistoryPage() {
 
         {results.length > 0 && (
           <div className={styles.headerActions}>
-            <button
-              onClick={handleClearAll}
-              className={styles.clearButton}
-            >
+            <Button onClick={handleClearAll} variant="danger" size="sm">
               Очистить всё
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -96,22 +95,16 @@ function HistoryPage() {
           <Text variant="secondary" className={styles.emptyText}>
             Вы еще не проходили диагностику эмоционального выгорания
           </Text>
-          <Link
-            to="/survey"
-            className={styles.startButton}
-          >
+          <Button as="link" to="/survey" variant="primary">
             Пройти диагностику
-          </Link>
+          </Button>
         </div>
       ) : (
         <div className={styles.resultsGrid}>
           {results
             .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
             .map((result) => (
-              <div
-                key={result.id}
-                className={styles.resultCard}
-              >
+              <div key={result.id} className={styles.resultCard}>
                 <div>
                   <div className={styles.resultHeader}>
                     <Title size="md" level="h3" variant="primary" className={styles.resultDate}>
@@ -132,7 +125,7 @@ function HistoryPage() {
 
                   <div className={styles.resultStats}>
                     <div>
-                      <Text as="strong">Общий балл:</Text>
+                      <Text>Общий балл:</Text>
                       <br />
                       <Text
                         as="span"
@@ -144,7 +137,7 @@ function HistoryPage() {
                     </div>
 
                     <div>
-                      <Text as="strong">Стадия Гринберга:</Text>
+                      <Text>Стадия Гринберга:</Text>
                       <br />
                       <Text as="span">{result.greenbergStage.name}</Text>
                     </div>
@@ -156,22 +149,23 @@ function HistoryPage() {
                 </div>
 
                 <div className={styles.resultActions}>
-                  <Link
-                    params={{
-                      id: result.id,
-                    }}
+                  <Button
+                    as="link"
                     to="/results/$id"
-                    className={styles.detailsButton}
+                    params={{ id: result.id }}
+                    variant="primary"
+                    size="sm"
                   >
                     Подробнее
-                  </Link>
+                  </Button>
 
-                  <button
+                  <Button
                     onClick={() => handleDeleteResult(result.id)}
-                    className={styles.deleteButton}
+                    variant="secondary"
+                    size="sm"
                   >
                     Удалить
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -183,12 +177,9 @@ function HistoryPage() {
           <Text variant="tertiary" className={styles.summaryText}>
             Всего прохождений: {results.length}
           </Text>
-          <Link
-            to="/survey"
-            className={styles.retryButton}
-          >
+          <Button as="link" to="/survey" variant="success">
             Пройти диагностику снова
-          </Link>
+          </Button>
         </div>
       )}
     </div>

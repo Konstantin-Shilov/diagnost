@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import React, { useEffect } from "react";
 
+import { Button } from "@/components/Button";
 import { Text, Title } from "@/components/Typography";
 import { defaultSurveyConfig } from "@/core/data/surveyConfig";
 import { AnalysisService } from "@/core/services/analysisService";
@@ -140,17 +141,13 @@ export const SurveyContainer: React.FC = () => {
       </div>
 
       <div className={styles.navigation}>
-        <button onClick={handlePrevious} disabled={!canGoPrevious()} className={styles.backButton}>
+        <Button onClick={handlePrevious} disabled={!canGoPrevious()} variant="outline">
           ← Назад
-        </button>
+        </Button>
 
-        <button
-          onClick={handleNext}
-          disabled={!canGoNext()}
-          className={`${styles.nextButton} ${canGoNext() ? styles.enabled : ""}`}
-        >
+        <Button onClick={handleNext} disabled={!canGoNext()} variant="primary">
           {isLastQuestion() ? "Завершить" : "Далее"} →
-        </button>
+        </Button>
       </div>
 
       {/* Debug info - remove in production */}

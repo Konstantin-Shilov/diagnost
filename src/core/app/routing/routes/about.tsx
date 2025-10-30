@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Text, Title } from "@/components/Typography";
+
 import styles from "./about.module.css";
 
 export const Route = createFileRoute("/about")({
@@ -33,19 +34,29 @@ function AboutPage() {
         </Text>
         <ol>
           <li>
-            <Text as="span"><strong>Стадия 1:</strong> «Медовый месяц» - высокая мотивация</Text>
+            <Text as="span">
+              <strong>Стадия 1:</strong> «Медовый месяц» - высокая мотивация
+            </Text>
           </li>
           <li>
-            <Text as="span"><strong>Стадия 2:</strong> Застой - снижение энтузиазма</Text>
+            <Text as="span">
+              <strong>Стадия 2:</strong> Застой - снижение энтузиазма
+            </Text>
           </li>
           <li>
-            <Text as="span"><strong>Стадия 3:</strong> Хроническое недовольство - раздражительность</Text>
+            <Text as="span">
+              <strong>Стадия 3:</strong> Хроническое недовольство - раздражительность
+            </Text>
           </li>
           <li>
-            <Text as="span"><strong>Стадия 4:</strong> Выгорание - апатия и цинизм</Text>
+            <Text as="span">
+              <strong>Стадия 4:</strong> Выгорание - апатия и цинизм
+            </Text>
           </li>
           <li>
-            <Text as="span"><strong>Стадия 5:</strong> Привычное выгорание - полное истощение</Text>
+            <Text as="span">
+              <strong>Стадия 5:</strong> Привычное выгорание - полное истощение
+            </Text>
           </li>
         </ol>
       </section>

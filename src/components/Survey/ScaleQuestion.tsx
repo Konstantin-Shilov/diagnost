@@ -1,7 +1,8 @@
 import React from "react";
 
-import type { Answer, Question } from "@/core/types";
 import { Text, Title } from "@/components/Typography";
+import type { Answer, Question } from "@/core/types";
+
 import styles from "./ScaleQuestion.module.css";
 
 interface ScaleQuestionProps {
@@ -38,10 +39,7 @@ export const ScaleQuestion: React.FC<ScaleQuestionProps> = ({ question, value, o
             {Array.from({ length: scaleMax - scaleMin + 1 }, (_, index) => {
               const scaleValue = scaleMin + index;
               return (
-                <label
-                  key={scaleValue}
-                  className={styles.scaleOption}
-                >
+                <label key={scaleValue} className={styles.scaleOption}>
                   <input
                     type="radio"
                     name={question.id}
@@ -59,7 +57,12 @@ export const ScaleQuestion: React.FC<ScaleQuestionProps> = ({ question, value, o
           </div>
 
           {scaleLabels && (
-            <Text size="sm" variant="tertiary" as="span" className={`${styles.scaleLabel} ${styles.scaleLabelEnd}`}>
+            <Text
+              size="sm"
+              variant="tertiary"
+              as="span"
+              className={`${styles.scaleLabel} ${styles.scaleLabelEnd}`}
+            >
               {scaleLabels.max}
             </Text>
           )}

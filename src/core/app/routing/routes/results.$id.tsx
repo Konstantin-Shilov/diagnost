@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ResultsContainer } from "@/components/Results";
+import { Text, Title } from "@/components/Typography";
 import { PDFExportService } from "@/core/services/pdfExportService";
 import { useResultsStore } from "@/core/store";
-import { Text, Title } from "@/components/Typography";
+
 import styles from "./results.$id.module.css";
 
 export const Route = createFileRoute("/results/$id")({

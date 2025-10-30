@@ -1,8 +1,9 @@
-import { Link } from "@tanstack/react-router";
 import React from "react";
 
-import type { DiagnosticResult } from "@/core/types";
+import { Button } from "@/components/Button";
 import { Text, Title } from "@/components/Typography";
+import type { DiagnosticResult } from "@/core/types";
+
 import styles from "./ResultsContainer.module.css";
 
 interface ResultsContainerProps {
@@ -34,7 +35,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         return styles.defaultLevel;
     }
   };
-
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("ru-RU", {
@@ -72,9 +72,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
           </Text>
         </div>
 
-        <div
-          className={`${styles.burnoutCard} ${getBurnoutColorClass(burnoutLevel.level)}`}
-        >
+        <div className={`${styles.burnoutCard} ${getBurnoutColorClass(burnoutLevel.level)}`}>
           <Title size="md" level="h3" variant="secondary" className={styles.cardTitle}>
             Уровень выгорания
           </Title>
@@ -98,9 +96,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </Title>
 
         <div className={styles.stageHeader}>
-          <div className={styles.stageBadge}>
-            {greenbergStage.stage}
-          </div>
+          <div className={styles.stageBadge}>{greenbergStage.stage}</div>
 
           <div className={styles.stageInfo}>
             <Title size="md" level="h4" variant="primary" className={styles.stageName}>
@@ -156,36 +152,24 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
       {/* Action Buttons */}
       <div className={styles.actionButtons}>
         {onSaveResult && (
-          <button
-            onClick={onSaveResult}
-            className={`${styles.button} ${styles.saveButton}`}
-          >
+          <Button onClick={onSaveResult} variant="primary">
             💾 Сохранить результат
-          </button>
+          </Button>
         )}
 
         {onExportPDF && (
-          <button
-            onClick={onExportPDF}
-            className={`${styles.button} ${styles.pdfButton}`}
-          >
+          <Button onClick={onExportPDF} variant="danger">
             📄 Скачать PDF
-          </button>
+          </Button>
         )}
 
-        <Link
-          to="/survey"
-          className={`${styles.button} ${styles.retryButton}`}
-        >
+        <Button as="link" to="/survey" variant="success">
           🔄 Пройти снова
-        </Link>
+        </Button>
 
-        <Link
-          to="/history"
-          className={`${styles.button} ${styles.historyButton}`}
-        >
+        <Button as="link" to="/history" variant="secondary">
           📊 История результатов
-        </Link>
+        </Button>
       </div>
     </div>
   );

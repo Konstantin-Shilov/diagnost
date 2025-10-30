@@ -5,7 +5,14 @@ import styles from "./Typography.module.css";
 
 export type TextSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type TextVariant = "primary" | "secondary" | "tertiary" | "quaternary";
-export type TextSemantic = "general" | "accent" | "negative" | "warning" | "positive" | "interactive" | "helping";
+export type TextSemantic =
+  | "general"
+  | "accent"
+  | "negative"
+  | "warning"
+  | "positive"
+  | "interactive"
+  | "helping";
 export type TextElement = "p" | "span" | "div" | "label";
 
 interface TextProps {

@@ -1,6 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
+import { Button } from "@/components/Button";
 import { Text, Title } from "@/components/Typography";
+
 import styles from "./index.module.css";
 
 export const Route = createFileRoute("/")({
@@ -20,44 +22,49 @@ function HomePage() {
       </Text>
 
       <div className={styles.buttonGroup}>
-        <Link
-          to="/survey"
-          className={styles.primaryButton}
-        >
+        <Button as="link" to="/survey" variant="primary">
           Начать диагностику
-        </Link>
+        </Button>
 
-        <Link
-          to="/history"
-          className={styles.secondaryButton}
-        >
+        <Button as="link" to="/history" variant="secondary">
           История результатов
-        </Link>
+        </Button>
 
-        <Link
-          to="/about"
-          className={styles.successButton}
-        >
+        <Button as="link" to="/about" variant="success">
           О диагностике
-        </Link>
+        </Button>
       </div>
 
       <section className={styles.section}>
-        <Title size="lg" level="h2" variant="primary">Как это работает?</Title>
+        <Title size="lg" level="h2" variant="primary">
+          Как это работает?
+        </Title>
         <div className={styles.cardGrid}>
           <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">1. Опрос</Title>
-            <Text variant="secondary">Ответьте на вопросы по 5 блокам: симптомы, состояние, внутренние причины</Text>
+            <Title size="md" level="h3" semantic="accent">
+              1. Опрос
+            </Title>
+            <Text variant="secondary">
+              Ответьте на вопросы по 5 блокам: симптомы, состояние, внутренние причины
+            </Text>
           </div>
 
           <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">2. Анализ</Title>
-            <Text variant="secondary">Система автоматически проанализирует ваши ответы и определит уровень выгорания</Text>
+            <Title size="md" level="h3" semantic="accent">
+              2. Анализ
+            </Title>
+            <Text variant="secondary">
+              Система автоматически проанализирует ваши ответы и определит уровень выгорания
+            </Text>
           </div>
 
           <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">3. Результаты</Title>
-            <Text variant="secondary">Получите детальный отчет с рекомендациями и возможностью сохранения в PDF</Text>
+            <Title size="md" level="h3" semantic="accent">
+              3. Результаты
+            </Title>
+            <Text variant="secondary">
+              Получите детальный отчет с рекомендациями и возможностью сохранения в PDF
+            </Text>
           </div>
         </div>
       </section>

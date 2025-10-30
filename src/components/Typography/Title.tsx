@@ -6,7 +6,14 @@ import styles from "./Typography.module.css";
 export type TitleSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type TitleLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 export type TitleVariant = "primary" | "secondary" | "tertiary" | "quaternary";
-export type TitleSemantic = "general" | "accent" | "negative" | "warning" | "positive" | "interactive" | "helping";
+export type TitleSemantic =
+  | "general"
+  | "accent"
+  | "negative"
+  | "warning"
+  | "positive"
+  | "interactive"
+  | "helping";
 
 interface TitleProps {
   size?: TitleSize;
