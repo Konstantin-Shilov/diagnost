@@ -43,14 +43,5 @@ function ResultPage() {
     }
   };
 
-  return (
-    <ResultsContainer
-      result={result}
-      onExportPDF={handleExportPDF}
-      onSaveResult={() => {
-        // Result is already saved, show confirmation
-        alert("Результат уже сохранен в истории");
-      }}
-    />
-  );
+  return <ResultsContainer result={result} onExportPDF={handleExportPDF} />;
 }

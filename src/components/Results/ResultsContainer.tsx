@@ -9,14 +9,9 @@ import styles from "./ResultsContainer.module.css";
 interface ResultsContainerProps {
   result: DiagnosticResult;
   onExportPDF?: () => void;
-  onSaveResult?: () => void;
 }
 
-export const ResultsContainer: React.FC<ResultsContainerProps> = ({
-  result,
-  onExportPDF,
-  onSaveResult,
-}) => {
+export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onExportPDF }) => {
   const { burnoutLevel, greenbergStage, totalScore, maxTotalScore, recommendations } = result;
 
   const getBurnoutColorClass = (level: string) => {
@@ -48,7 +43,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
 
   return (
     <div className={styles.container}>
-      {/* Header */}
       <div className={styles.header}>
         <Title size="xl" level="h1" semantic="accent" className={styles.title}>
           Результаты диагностики
@@ -58,7 +52,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </Text>
       </div>
 
-      {/* Overall Score */}
       <div className={styles.scoreGrid}>
         <div className={styles.scoreCard}>
           <Title size="md" level="h3" variant="secondary" className={styles.cardTitle}>
@@ -89,7 +82,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </div>
       </div>
 
-      {/* Greenberg Stage */}
       <div className={styles.greenbergSection}>
         <Title size="lg" level="h3" semantic="accent" className={styles.greenbergTitle}>
           Стадия по модели Гринберга
@@ -122,7 +114,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </div>
       </div>
 
-      {/* Recommendations */}
       <div className={styles.recommendationsSection}>
         <Title size="lg" level="h3" semantic="positive" className={styles.recommendationsTitle}>
           Рекомендации
@@ -137,7 +128,6 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </div>
       </div>
 
-      {/* Medical Disclaimer */}
       <div className={styles.disclaimer}>
         <Title size="md" level="h4" semantic="warning" className={styles.disclaimerTitle}>
           ⚠️ Важное предупреждение
@@ -149,14 +139,7 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({
         </Text>
       </div>
 
-      {/* Action Buttons */}
       <div className={styles.actionButtons}>
-        {onSaveResult && (
-          <Button onClick={onSaveResult} variant="primary">
-            💾 Сохранить результат
-          </Button>
-        )}
-
         {onExportPDF && (
           <Button onClick={onExportPDF} variant="danger">
             📄 Скачать PDF
