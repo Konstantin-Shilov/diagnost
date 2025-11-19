@@ -5,7 +5,7 @@
 export const robotoFont = {
   fontName: "Roboto-Regular",
   fontStyle: "normal",
-  fontData: "" // Will be loaded dynamically or use system font fallback
+  fontData: "", // Will be loaded dynamically or use system font fallback
 };
 
 // Note: For a production application, you would need to:
