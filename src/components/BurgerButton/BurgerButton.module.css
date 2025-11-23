@@ -1,0 +1,45 @@
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.burger:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #495057;
+  border-radius: 1px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* Cross animation */
+.burger.open .line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger.open .line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.burger.open .line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}

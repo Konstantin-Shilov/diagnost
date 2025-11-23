@@ -19,5 +19,5 @@ export const router = createRouter({
   basepath: isGitHubPages ? "/diagnost" : "/",
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,
-  defaultScrollRestorationBehavior: "top",
+  scrollRestorationBehavior: "smooth",
 });
