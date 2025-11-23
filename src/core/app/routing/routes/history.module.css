@@ -168,3 +168,94 @@
 .scoreText.default {
   color: #6c757d;
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .container {
+    padding: 12px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .headerActions {
+    width: 100%;
+  }
+
+  .headerActions > * {
+    flex: 1;
+  }
+
+  .emptyState {
+    padding: 40px 16px;
+  }
+
+  .emptyTitle {
+    font-size: 18px;
+  }
+
+  .emptyText {
+    font-size: 14px;
+  }
+
+  .resultsGrid {
+    gap: 16px;
+  }
+
+  .resultCard {
+    padding: 16px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .resultHeader {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .resultDate {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .levelBadge,
+  .stageBadge {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  .resultStats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .resultDescription {
+    font-size: 13px;
+  }
+
+  .resultActions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .resultActions > * {
+    flex: 1;
+  }
+
+  .summary {
+    margin-top: 24px;
+    padding: 16px;
+  }
+
+  .summaryText {
+    font-size: 14px;
+  }
+}

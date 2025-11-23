@@ -234,3 +234,129 @@
 .burnoutCard.defaultLevel {
   border-color: #6c757d;
 }
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .container {
+    padding: 12px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+    padding: 20px 16px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .date {
+    font-size: 14px;
+  }
+
+  .scoreGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .scoreCard,
+  .burnoutCard {
+    padding: 20px 16px;
+  }
+
+  .cardTitle {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .scoreNumber {
+    font-size: 36px;
+  }
+
+  .burnoutLevel {
+    font-size: 20px;
+  }
+
+  .burnoutDescription {
+    font-size: 13px;
+  }
+
+  .greenbergSection {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+  }
+
+  .greenbergTitle {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .stageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stageBadge {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .stageName {
+    font-size: 18px;
+  }
+
+  .stageDescription {
+    font-size: 14px;
+  }
+
+  .characteristicsTitle {
+    font-size: 14px;
+  }
+
+  .characteristicsList {
+    padding-left: 16px;
+  }
+
+  .characteristicItem {
+    font-size: 14px;
+  }
+
+  .recommendationsSection {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+  }
+
+  .recommendationsTitle {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .recommendationCard {
+    padding: 12px;
+  }
+
+  .disclaimer {
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .disclaimerTitle {
+    font-size: 16px;
+  }
+
+  .disclaimerText {
+    font-size: 13px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .actionButtons > * {
+    width: 100%;
+  }
+}

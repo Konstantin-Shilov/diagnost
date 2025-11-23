@@ -149,12 +149,6 @@ export const SurveyContainer: React.FC = () => {
           {isLastQuestion() ? "Завершить" : "Далее"} →
         </Button>
       </div>
-
-      {/* Debug info - remove in production */}
-      <div className={styles.debug}>
-        <strong>Debug:</strong> Block {currentBlockIndex + 1}/{config.blocks.length}, Question{" "}
-        {currentQuestionIndex + 1}/{currentBlock.questions.length}, Progress: {getProgress()}%
-      </div>
     </div>
   );
 };

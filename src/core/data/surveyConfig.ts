@@ -115,7 +115,7 @@ export const defaultSurveyConfig: SurveyConfig = {
           text: "Настроение (соотношение позитивных и негативных эмоций в %)",
           type: "scale",
           scaleMin: 0,
-          scaleMax: 100,
+          scaleMax: 10,
           scaleLabels: { min: "100%Н/0%П", max: "0%Н/100%П" },
         },
       ],

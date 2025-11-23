@@ -17,4 +17,7 @@ const isGitHubPages =
 export const router = createRouter({
   routeTree,
   basepath: isGitHubPages ? "/diagnost" : "/",
+  defaultPreloadStaleTime: 0,
+  scrollRestoration: true,
+  defaultScrollRestorationBehavior: "top",
 });

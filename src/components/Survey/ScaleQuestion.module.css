@@ -24,7 +24,7 @@
 .scaleLabel {
   font-size: 14px;
   color: #666;
-  min-width: 120px;
+  min-width: 60px;
 }
 
 .scaleLabelEnd {
@@ -55,4 +55,73 @@
 .scaleValue {
   font-size: 14px;
   font-weight: bold;
+}
+
+/* Mobile styles */
+@media (max-width: 640px) {
+  .container {
+    margin-bottom: 20px;
+  }
+
+  .questionText {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .scaleContainer {
+    gap: 10px;
+  }
+
+  .scaleRow {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .scaleLabel {
+    min-width: unset;
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .scaleLabelEnd {
+    text-align: right;
+    order: 1;
+  }
+
+  .scaleOptions {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .scaleOption {
+    gap: 3px;
+    min-width: 36px;
+  }
+
+  .scaleInput {
+    width: 24px;
+    height: 24px;
+  }
+
+  .scaleValue {
+    font-size: 12px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 380px) {
+  .scaleOptions {
+    gap: 4px;
+  }
+
+  .scaleOption {
+    min-width: 32px;
+  }
+
+  .scaleInput {
+    width: 22px;
+    height: 22px;
+  }
 }
