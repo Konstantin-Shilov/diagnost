@@ -2,6 +2,7 @@ import React from "react";
 
 import { Button } from "@/components/Button";
 import { Text, Title } from "@/components/Typography";
+import { defaultSurveyConfig } from "@/core/data/surveyConfig";
 import type { DiagnosticResult } from "@/core/types";
 
 import styles from "./ResultsContainer.module.css";
@@ -12,7 +13,8 @@ interface ResultsContainerProps {
 }
 
 export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onExportPDF }) => {
-  const { burnoutLevel, greenbergStage, totalScore, maxTotalScore, recommendations } = result;
+  const { burnoutLevel, greenbergStage, totalScore, maxTotalScore, recommendations, responses } =
+    result;
 
   const getBurnoutColorClass = (level: string) => {
     switch (level) {
@@ -126,6 +128,65 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onEx
             </div>
           ))}
         </div>
+      </div>
+
+      <div className={styles.detailedAnswersSection}>
+        <Title size="lg" level="h3" semantic="accent" className={styles.detailedAnswersTitle}>
+          Детальные ответы
+        </Title>
+        <Text variant="secondary" className={styles.detailedAnswersSubtitle}>
+          Ваши ответы на вопросы диагностики. Эта информация может быть полезна специалисту для более
+          глубокого анализа вашего состояния.
+        </Text>
+
+        {responses.map((response) => {
+          const block = defaultSurveyConfig.blocks.find((b) => b.id === response.blockId);
+          if (!block) return null;
+
+          return (
+            <div key={response.blockId} className={styles.answerBlock}>
+              <Title size="md" level="h4" variant="primary" className={styles.blockTitle}>
+                {block.title}
+              </Title>
+
+              <div className={styles.answersList}>
+                {response.answers.map((answer) => {
+                  const question = block.questions.find((q) => q.id === answer.questionId);
+                  if (!question) return null;
+
+                  const getAnswerLabel = () => {
+                    if (typeof answer.value === "number") {
+                      if (question.scaleLabels) {
+                        // Для вопросов с текстовыми метками (например, "Никогда" / "Постоянно")
+                        if (question.scaleMin === 0 && question.scaleMax === 3) {
+                          const labels = ["Никогда", "Иногда", "Часто", "Постоянно"];
+                          return `${answer.value} — ${labels[answer.value]}`;
+                        }
+                        // Для числовых шкал (например, 1-10)
+                        return `${answer.value}`;
+                      }
+                      return answer.value.toString();
+                    }
+                    return String(answer.value);
+                  };
+
+                  return (
+                    <div key={answer.questionId} className={styles.answerItem}>
+                      <Text variant="secondary" className={styles.questionText}>
+                        {question.text}
+                      </Text>
+                      <div className={styles.answerValue}>
+                        <Text as="span" className={styles.answerValueText}>
+                          {getAnswerLabel()}
+                        </Text>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className={styles.disclaimer}>

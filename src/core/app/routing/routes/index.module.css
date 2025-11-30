@@ -1,33 +1,98 @@
 .container {
-  padding: 20px;
-  max-width: 800px;
+  padding: 40px 20px;
+  max-width: 700px;
   margin: 0 auto;
+  text-align: center;
 }
 
-.description {
-  margin: 20px 0;
+.title {
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.methodologySection {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.methodologyTitle {
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.methodologyList {
+  margin: 0 0 20px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.methodologyList li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+}
+
+.methodologyList li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.methodologyNote {
+  margin: 0;
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+  font-style: italic;
 }
 
 .buttonGroup {
-  margin-top: 30px;
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.section {
-  margin-top: 40px;
-}
+/* Mobile styles */
+@media (max-width: 640px) {
+  .container {
+    padding: 24px 12px;
+  }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
+  .title {
+    font-size: 28px;
+  }
 
-.card {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .methodologySection {
+    padding: 20px 16px;
+  }
+
+  .methodologyList li {
+    font-size: 14px;
+  }
+
+  .methodologyNote {
+    font-size: 13px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttonGroup > * {
+    width: 100%;
+  }
 }

@@ -12,62 +12,47 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <div className={styles.container}>
-      <Title size="xl" level="h1" semantic="accent">
+      <Title size="xl" level="h1" semantic="accent" className={styles.title}>
         Диагностика эмоционального выгорания
       </Title>
 
-      <Text size="lg" variant="secondary" className={styles.description}>
-        Добро пожаловать в сервис для диагностики эмоционального выгорания. Этот инструмент поможет
-        вам оценить ваше текущее состояние и определить уровень эмоционального выгорания.
+      <Text size="lg" variant="primary" className={styles.subtitle}>
+        Привет! Я помогу определить уровень выгорания и его внутренние причины.
       </Text>
+
+      <div className={styles.methodologySection}>
+        <Text variant="secondary" className={styles.methodologyTitle}>
+          Диагностика основана на:
+        </Text>
+        <ul className={styles.methodologyList}>
+          <li>
+            <Text>MBI (Кристина Маслач)</Text>
+          </li>
+          <li>
+            <Text>Модели Гринберга (адаптация БПСП, 5 стадий)</Text>
+          </li>
+          <li>
+            <Text>Биопсихосоциальном анализе (тело – эмоции – мысли – поведение)</Text>
+          </li>
+          <li>
+            <Text>3000+ диагностик выгорания</Text>
+          </li>
+        </ul>
+        <Text variant="secondary" className={styles.methodologyNote}>
+          Диагностика подходит не только для профессионального вида выгорания, а для всех —
+          материнское, в отношениях и т.д.
+        </Text>
+      </div>
 
       <div className={styles.buttonGroup}>
         <Button as="link" to="/survey" variant="primary">
           Начать диагностику
         </Button>
 
-        <Button as="link" to="/history" variant="secondary">
-          История результатов
-        </Button>
-
-        <Button as="link" to="/about" variant="success">
-          О диагностике
+        <Button as="link" to="/about" variant="secondary">
+          О методике
         </Button>
       </div>
-
-      <section className={styles.section}>
-        <Title size="lg" level="h2" variant="primary">
-          Как это работает?
-        </Title>
-        <div className={styles.cardGrid}>
-          <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">
-              1. Опрос
-            </Title>
-            <Text variant="secondary">
-              Ответьте на вопросы по 5 блокам: симптомы, состояние, внутренние причины
-            </Text>
-          </div>
-
-          <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">
-              2. Анализ
-            </Title>
-            <Text variant="secondary">
-              Система автоматически проанализирует ваши ответы и определит уровень выгорания
-            </Text>
-          </div>
-
-          <div className={styles.card}>
-            <Title size="md" level="h3" semantic="accent">
-              3. Результаты
-            </Title>
-            <Text variant="secondary">
-              Получите детальный отчет с рекомендациями и возможностью сохранения в PDF
-            </Text>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

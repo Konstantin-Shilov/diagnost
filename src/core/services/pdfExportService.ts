@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
+import { defaultSurveyConfig } from "@/core/data/surveyConfig";
 import type { DiagnosticResult } from "@/core/types";
 
 // Roboto Regular font for Cyrillic support - base64 encoded
@@ -239,7 +240,7 @@ export class PDFExportService {
         yPos += recLines.length * 5 + 4;
       }
 
-      yPos += 5;
+      yPos += 10;
 
       // Check if we need a new page for warning
       if (yPos > pdf.internal.pageSize.getHeight() - 40) {
@@ -268,6 +269,109 @@ export class PDFExportService {
         "Данный тест НЕ ЯВЛЯЕТСЯ медицинским инструментом и не предназначен для постановки диагноза. Результаты носят исключительно информационный характер. При серьезных проблемах с психическим здоровьем обратитесь к квалифицированному специалисту.";
       const warningLines = pdf.splitTextToSize(warningText, contentWidth - 6);
       pdf.text(warningLines, margin + 3, yPos);
+
+      // Start detailed answers on a new page
+      pdf.addPage();
+      yPos = margin;
+
+      // Detailed Answers Section
+      pdf.setFontSize(16);
+      pdf.setFont(fontFamily, "bold");
+      pdf.setTextColor(30, 64, 175);
+      pdf.text("Детальные ответы", margin, yPos);
+      yPos += 6;
+
+      pdf.setFontSize(9);
+      pdf.setFont(fontFamily, "normal");
+      pdf.setTextColor(107, 114, 128);
+      const subtitleText =
+        "Ваши ответы на вопросы диагностики. Эта информация может быть полезна специалисту для более глубокого анализа вашего состояния.";
+      const subtitleLines = pdf.splitTextToSize(subtitleText, contentWidth);
+      pdf.text(subtitleLines, margin, yPos);
+      yPos += subtitleLines.length * 4 + 6;
+
+      // Process each block of responses
+      for (const response of result.responses) {
+        const block = defaultSurveyConfig.blocks.find((b) => b.id === response.blockId);
+        if (!block) continue;
+
+        // Check if we need a new page for the block
+        if (yPos > pdf.internal.pageSize.getHeight() - 40) {
+          pdf.addPage();
+          yPos = margin;
+        }
+
+        // Block title
+        pdf.setFontSize(12);
+        pdf.setFont(fontFamily, "bold");
+        pdf.setTextColor(31, 41, 55);
+        pdf.text(block.title, margin, yPos);
+        yPos += 2;
+
+        // Underline
+        pdf.setDrawColor(30, 64, 175);
+        pdf.setLineWidth(0.5);
+        pdf.line(margin, yPos, margin + contentWidth, yPos);
+        yPos += 6;
+
+        // Create table data for answers
+        const answersData: string[][] = [];
+
+        for (const answer of response.answers) {
+          const question = block.questions.find((q) => q.id === answer.questionId);
+          if (!question) continue;
+
+          let answerLabel = "";
+          if (typeof answer.value === "number") {
+            if (question.scaleMin === 0 && question.scaleMax === 3) {
+              const labels = ["Никогда", "Иногда", "Часто", "Постоянно"];
+              answerLabel = `${answer.value} — ${labels[answer.value]}`;
+            } else {
+              answerLabel = `${answer.value}`;
+            }
+          } else {
+            answerLabel = String(answer.value);
+          }
+
+          answersData.push([question.text, answerLabel]);
+        }
+
+        // Render table for this block
+        autoTable(pdf, {
+          startY: yPos,
+          head: [],
+          body: answersData,
+          theme: "plain",
+          styles: {
+            font: fontFamily,
+            fontSize: 9,
+            cellPadding: 3,
+            lineColor: [229, 231, 235],
+            lineWidth: 0.1,
+          },
+          columnStyles: {
+            0: { cellWidth: contentWidth * 0.7, textColor: [75, 85, 99] },
+            1: {
+              cellWidth: contentWidth * 0.3,
+              fontStyle: "bold",
+              textColor: [30, 64, 175],
+              halign: "center",
+              fillColor: [231, 243, 255],
+            },
+          },
+          didDrawCell: (data) => {
+            if (data.column.index === 0) {
+              // Draw left border for question cells
+              const { x, y, height } = data.cell;
+              pdf.setDrawColor(30, 64, 175);
+              pdf.setLineWidth(1);
+              pdf.line(x, y, x, y + height);
+            }
+          },
+        });
+
+        yPos = (pdf as any).lastAutoTable.finalY + 8;
+      }
 
       // Save the PDF
       const testDateObj = new Date(result.timestamp);

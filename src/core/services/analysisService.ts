@@ -7,19 +7,27 @@ import type {
 } from "@/core/types";
 
 export class AnalysisService {
-  private static calculateTotalScore(responses: SurveyResponse[]): number {
-    let totalScore = 0;
+  private static calculateScores(responses: SurveyResponse[]): {
+    symptomsScore: number;
+    stateScore: number;
+    causesScore: number;
+    totalScore: number;
+  } {
+    let symptomsScore = 0;
+    let stateScore = 0;
+    let causesScore = 0;
 
     for (const response of responses) {
       if (response.blockId === "symptoms") {
-        // 1. Подсчёт баллов по симптомам (0-3 за каждый)
+        // 1. Подсчёт баллов по симптомам (0-3 за каждый, 10 вопросов)
+        // Максимум: 10 × 3 = 30
         for (const answer of response.answers) {
           if (typeof answer.value === "number") {
-            totalScore += answer.value;
+            symptomsScore += answer.value;
           }
         }
       } else if (response.blockId === "state") {
-        // 2. Определение состояния
+        // 2. Анализ состояния (энергия, напряжение, настроение)
         let energyScore = 0;
         let tensionScore = 0;
         let moodScore = 0;
@@ -37,26 +45,39 @@ export class AnalysisService {
               else if (answer.value >= 6) tensionScore = 2;
               else tensionScore = 1;
             } else if (answer.questionId === "state_mood") {
-              // Настроение (% негативных эмоций): ≥70% → +3, 50-69% → +2, <50% → +1
-              if (answer.value >= 70) moodScore = 3;
-              else if (answer.value >= 50) moodScore = 2;
+              // Настроение: 0-3 → +3, 4-6 → +2, 7-10 → +1
+              if (answer.value <= 3) moodScore = 3;
+              else if (answer.value <= 6) moodScore = 2;
               else moodScore = 1;
             }
           }
         }
 
-        totalScore += energyScore + tensionScore + moodScore;
+        stateScore = energyScore + tensionScore + moodScore;
+        // Максимум: 3 + 3 + 3 = 9
       } else if (response.blockId === "internal_causes") {
-        // 3. Подсчёт баллов по внутренним причинам (0-2 за каждую)
+        // 3. Подсчёт внутренних причин (0-3 за каждую, 15 вопросов)
+        // Максимум: 15 × 3 = 45
         for (const answer of response.answers) {
           if (typeof answer.value === "number") {
-            totalScore += answer.value;
+            causesScore += answer.value;
           }
         }
       }
     }
 
-    return totalScore;
+    // 4. Итоговый интегральный балл по формуле:
+    // Симптомы × 0.5 + Причины × 0.3 + Состояние × 0.2
+    const totalScore = Math.round(
+      symptomsScore * 0.5 + causesScore * 0.3 + stateScore * 0.2,
+    );
+
+    return {
+      symptomsScore,
+      stateScore,
+      causesScore,
+      totalScore,
+    };
   }
 
   private static getBurnoutLevel(score: number, rules: ScoringRules): BurnoutLevel {
@@ -87,7 +108,10 @@ export class AnalysisService {
         "Низкий уровень выгорания. Ваше состояние в пределах нормы, продолжайте следить за балансом.";
     }
 
-    const maxTotalScore = 69; // Based on our new survey configuration: 10*3 + 3*3 + 15*2 = 30+9+30 = 69
+    // Максимальный балл по формуле:
+    // Симптомы(30) × 0.5 + Причины(45) × 0.3 + Состояние(9) × 0.2
+    // = 15 + 13.5 + 1.8 = 30.3 ≈ 30
+    const maxTotalScore = 30;
 
     return {
       level,
@@ -104,28 +128,28 @@ export class AnalysisService {
     if (score >= greenbergStages[5].min) {
       return {
         stage: 5,
-        name: "Пробивание стены",
-        description: "Полное истощение, психосоматика, эмоциональная пустота",
+        name: "Угасание",
+        description: "Полное эмоциональное и физическое истощение, отстранённость от жизни",
         characteristics: [
-          "Полное истощение",
-          "Психосоматические заболевания",
-          "Эмоциональная пустота",
-          "Серьезные проблемы со здоровьем",
-          "Социальная изоляция",
+          "Тело: Хронические заболевания, психосоматика, упадок сил",
+          "Эмоции: Пустота, апатия, отсутствие чувств",
+          "Мысли: Безнадёжность, нет смысла в действиях",
+          "Поведение: Изоляция, избегание людей и обязанностей",
+          "Риск: Депрессия, серьёзные проблемы со здоровьем, потеря трудоспособности",
         ],
       };
     }
     if (score >= greenbergStages[4].min) {
       return {
         stage: 4,
-        name: "Кризис",
-        description: "Истощение, бессонница, тревога, конфликты",
+        name: "Истощение",
+        description: "Глубокая усталость, тревога, потеря контроля над ситуацией",
         characteristics: [
-          "Истощение",
-          "Бессонница",
-          "Тревога",
-          "Конфликты",
-          "Снижение продуктивности",
+          "Тело: Бессонница, головные боли, мышечное напряжение",
+          "Эмоции: Тревога, раздражительность, эмоциональные срывы",
+          "Мысли: Негативное мышление, самокритика, чувство безвыходности",
+          "Поведение: Конфликты, снижение продуктивности, избегание задач",
+          "Риск: Тревожные расстройства, проблемы в отношениях, профессиональный кризис",
         ],
       };
     }
@@ -133,40 +157,40 @@ export class AnalysisService {
       return {
         stage: 3,
         name: "Хронические симптомы",
-        description: "Болезни, апатия, утрата интереса, формальность",
+        description: "Стабильное снижение энергии, частые недомогания, отстранённость",
         characteristics: [
-          "Болезни",
-          "Апатия",
-          "Утрата интереса",
-          "Формальность",
-          "Снижение качества работы",
+          "Тело: Частые простуды, снижение иммунитета, физическая слабость",
+          "Эмоции: Апатия, потеря интереса, цинизм",
+          "Мысли: Сомнения в своих способностях, обесценивание достижений",
+          "Поведение: Формальное выполнение обязанностей, избегание инициативы",
+          "Риск: Ухудшение здоровья, снижение качества работы, отчуждение",
         ],
       };
     }
     if (score >= greenbergStages[2].min) {
       return {
         stage: 2,
-        name: "Недостаток топлива",
-        description: "Хроническая усталость, раздражение, компенсация стимуляторами",
+        name: "Усталость",
+        description: "Накопленная усталость, первые признаки истощения ресурсов",
         characteristics: [
-          "Хроническая усталость",
-          "Раздражение",
-          "Компенсация стимуляторами",
-          "Снижение энтузиазма",
-          "Первые признаки выгорания",
+          "Тело: Усталость по утрам, нарушения сна, напряжение в теле",
+          "Эмоции: Раздражительность, перепады настроения, снижение энтузиазма",
+          "Мысли: Начало негативного мышления, сомнения, потеря фокуса",
+          "Поведение: Прокрастинация, компенсация кофе/сладким, меньше времени на отдых",
+          "Риск: Развитие хронической усталости, ухудшение отношений, снижение эффективности",
         ],
       };
     }
     return {
       stage: 1,
-      name: "Медовый месяц",
-      description: "Высокая энергия, лёгкое перенапряжение, энтузиазм",
+      name: "Энтузиазм",
+      description: "Высокая вовлечённость, готовность много работать, оптимизм",
       characteristics: [
-        "Высокая энергия",
-        "Лёгкое перенапряжение",
-        "Энтузиазм",
-        "Готовность к переработкам",
-        "Высокая продуктивность",
+        "Тело: Высокая энергия, лёгкое напряжение",
+        "Эмоции: Энтузиазм, воодушевление, драйв",
+        "Мысли: Оптимизм, вера в свои силы, амбициозные планы",
+        "Поведение: Готовность к переработкам, высокая продуктивность",
+        "Риск: Игнорирование сигналов усталости, переоценка своих возможностей",
       ],
     };
   }
@@ -240,9 +264,9 @@ export class AnalysisService {
     responses: SurveyResponse[],
     scoringRules: ScoringRules,
   ): DiagnosticResult {
-    const totalScore = this.calculateTotalScore(responses);
-    const burnoutLevel = this.getBurnoutLevel(totalScore, scoringRules);
-    const greenbergStage = this.getGreenbergStage(totalScore, scoringRules);
+    const scores = this.calculateScores(responses);
+    const burnoutLevel = this.getBurnoutLevel(scores.totalScore, scoringRules);
+    const greenbergStage = this.getGreenbergStage(scores.totalScore, scoringRules);
     const recommendations = this.getRecommendations(burnoutLevel, greenbergStage);
 
     return {
@@ -251,7 +275,7 @@ export class AnalysisService {
       responses,
       burnoutLevel,
       greenbergStage,
-      totalScore,
+      totalScore: scores.totalScore,
       maxTotalScore: burnoutLevel.maxScore,
       recommendations,
     };
