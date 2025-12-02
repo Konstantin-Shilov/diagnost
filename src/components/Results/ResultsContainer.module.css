@@ -159,6 +159,53 @@
   border: 1px solid #d4edda;
 }
 
+.importanceSection {
+  padding: 25px;
+  background-color: #fff8e1;
+  border: 2px solid #ffa726;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.importanceTitle {
+  margin: 0 0 15px 0;
+  color: #e65100;
+}
+
+.importanceIntro {
+  margin: 0 0 15px 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.importanceList {
+  margin: 0 0 15px 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.importanceList li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.importanceList li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ff6f00;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.importanceConclusion {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
 .detailedAnswersSection {
   padding: 25px;
   background-color: #f8f9fa;
@@ -409,6 +456,34 @@
 
   .recommendationCard {
     padding: 12px;
+  }
+
+  .importanceSection {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+  }
+
+  .importanceTitle {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .importanceIntro {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .importanceList {
+    padding-left: 16px;
+  }
+
+  .importanceList li {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .importanceConclusion {
+    font-size: 14px;
   }
 
   .detailedAnswersSection {

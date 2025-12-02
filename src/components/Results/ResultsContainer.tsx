@@ -130,13 +130,47 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onEx
         </div>
       </div>
 
+      <div className={styles.importanceSection}>
+        <Title size="lg" level="h3" variant="primary" className={styles.importanceTitle}>
+          Почему важно не откладывать
+        </Title>
+
+        <Text variant="secondary" className={styles.importanceIntro}>
+          По данным ВОЗ, выгорание испытывают 76% людей в мире.
+        </Text>
+
+        <ul className={styles.importanceList}>
+          <li>
+            <Text>В России — до 87%, особенно среди специалистов с высокой ответственностью.</Text>
+          </li>
+          <li>
+            <Text>
+              Исследования показывают: отпуск помогает лишь временно. Через 2–6 недель большинство
+              возвращается в то же состояние.
+            </Text>
+          </li>
+          <li>
+            <Text>
+              Причина — автоматизмы. До 95% времени человек действует из автоматических реакций,
+              убеждений и прошлых стратегий, которые продолжают вести к выгоранию, даже если тело
+              отдыхает.
+            </Text>
+          </li>
+        </ul>
+
+        <Text variant="secondary" className={styles.importanceConclusion}>
+          Если не менять глубинные причины, выгорание переходит на следующую стадию — с ухудшением
+          психоэмоционального и физического здоровья.
+        </Text>
+      </div>
+
       <div className={styles.detailedAnswersSection}>
         <Title size="lg" level="h3" semantic="accent" className={styles.detailedAnswersTitle}>
           Детальные ответы
         </Title>
         <Text variant="secondary" className={styles.detailedAnswersSubtitle}>
-          Ваши ответы на вопросы диагностики. Эта информация может быть полезна специалисту для более
-          глубокого анализа вашего состояния.
+          Ваши ответы на вопросы диагностики. Эта информация может быть полезна специалисту для
+          более глубокого анализа вашего состояния.
         </Text>
 
         {responses.map((response) => {
