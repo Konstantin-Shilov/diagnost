@@ -10,14 +10,16 @@
 
 ## Текущее состояние проекта
 
-### Стек
-- React 19.1.1
-- TypeScript 5.9.2
-- Vite 7.2.2
-- TanStack Router 1.132.2
-- Zustand 5.0.8 (с persist middleware)
+### Стек (обновлен 2026-01-10)
+- **React 19.2.3** ⬆️ (было 19.1.1)
+- **TypeScript 5.9.3** ⬆️ (было 5.9.2)
+- **Vite 7.3.1** ⬆️ (было 7.2.2)
+- **TanStack Router 1.146.2** ⬆️ (было 1.132.2)
+- **Zustand 5.0.9** ⬆️ (было 5.0.8)
+- **Zod 4.3.5** ⬆️ (было 4.1.11, ⚠️ beta, рекомендуется downgrade на v3.24.1)
 - CSS Modules
-- jsPDF для генерации PDF
+- **jsPDF 4.0.0** ⬆️ (было 3.0.3, мажорное обновление!)
+- **Vitest 4.0.16** ⬆️ (было 3.2.4, мажорное обновление!)
 
 ### Структура роутов
 ```
@@ -45,42 +47,65 @@ routes/
 
 ---
 
-## План миграции
+## ⚠️ ВАЖНО: Миграция в master ветке
 
-Миграция разбита на 6 фаз для поэтапного внедрения без breaking changes.
+**Данная миграция выполняется напрямую в ветке `main`**.
+
+### Перед началом:
+1. ✅ Закоммитить все текущие изменения
+2. ✅ Убедиться что проект собирается: `npm run build`
+3. ✅ Создать тег с текущей версией: `git tag pre-tanstack-start-migration`
+4. ⚠️ Понимать, что изменения будут необратимы без revert
+
+### Rollback план:
+```bash
+# Если что-то пойдет не так, вернуться к тегу
+git reset --hard pre-tanstack-start-migration
+npm install  # Восстановить зависимости
+```
 
 ---
 
-## Фаза 0: Подготовка (1-2 дня)
+## План миграции
+
+Миграция разбита на 5 фаз для поэтапного внедрения.
+
+**Актуальные версии библиотек**: См. [@versions.md](./versions.md)
+
+---
+
+## Фаза 0: Подготовка (30 минут)
 
 ### Задачи
 
-#### 0.1 Создать экспериментальную ветку
+#### 0.1 Создать бэкап текущего состояния
 ```bash
-git checkout -b feature/tanstack-start-migration
+# Закоммитить все изменения
+git add .
+git commit -m "Pre-migration: Save current state"
+
+# Создать тег для возможного отката
+git tag pre-tanstack-start-migration
+
+# Убедиться что проект работает
+npm run build
+npm run dev  # Проверить что все работает
 ```
 
-#### 0.2 Бэкап текущего состояния
-- Закоммитить все изменения
-- Убедиться что проект собирается: `npm run build`
-- Запустить тесты: `npm test`
+#### 0.2 Изучить документацию
+- [ ] [TanStack Start Overview](https://tanstack.com/start/latest/docs/framework/react/overview)
+- [ ] [TanStack Start Quick Start](https://tanstack.com/start/latest/docs/framework/react/quick-start)
+- [ ] [Server Functions Guide](https://tanstack.com/start/latest/docs/framework/react/server-functions)
+- [ ] [Migrating from Vinxi to Vite](https://blog.logrocket.com/migrating-tanstack-start-vinxi-vite/)
 
-#### 0.3 Изучить документацию
-- [ ] [TanStack Start Quick Start](https://tanstack.com/start/latest/docs/quick-start)
-- [ ] [Server Functions Guide](https://tanstack.com/start/latest/docs/server-functions)
-- [ ] [Migration from Router](https://tanstack.com/start/latest/docs/migration)
-
-#### 0.4 Выбрать backend стек
-**Рекомендация**: PostgreSQL + Prisma
+#### 0.3 Backend стек выбран
+**✅ PostgreSQL + Prisma 7.2.0**
+- Rust-free клиент (быстрее, меньше размер)
 - Type-safe ORM
-- Хорошая интеграция с TanStack Start
+- Отличная интеграция с TanStack Start
 - Поддержка миграций
 
-**Альтернативы**:
-- SQLite + Drizzle ORM (проще для начала)
-- MongoDB + Mongoose
-
-#### 0.5 Создать план базы данных
+#### 0.4 Схема базы данных
 ```prisma
 // prisma/schema.prisma
 model User {
@@ -115,20 +140,34 @@ model DiagnosticResult {
 ### 1.1 Установить зависимости
 
 ```bash
-# Core packages
-npm install @tanstack/react-start
+# Core packages (Январь 2026)
+npm install @tanstack/react-start@latest      # v1.145.3+
+npm install @tanstack/react-query@latest      # v5.90.16+
+npm install -D @tanstack/react-query-devtools@latest
 
-# Build tools (Vite уже установлен 7.2.2, но можно обновить)
-npm install -D vite@latest
-
-# TypeScript types (большинство уже установлено)
-npm install -D @types/node
+# ⚠️ ВАЖНО: Downgrade Zod на стабильную версию!
+# Текущая версия zod@4.3.5 это BETA версия
+npm install zod@^3.24.1
 ```
 
-**Примечание**:
-- `@tanstack/react-router` уже установлен (1.132.2)
-- `react`, `react-dom`, `vite`, `@vitejs/plugin-react`, `typescript` уже есть
-- Vinxi НЕ нужен!
+**Актуальные версии** (см. [versions.md](./versions.md)):
+- `@tanstack/react-start`: **1.145.3+** (нужно установить)
+- `@tanstack/react-query`: **5.90.16+** (нужно установить)
+- `zod`: **3.24.1** (стабильная, downgrade с 4.3.5)
+
+**✅ Уже установлено и обновлено**:
+- `react@19.2.3`, `react-dom@19.2.3` ✅
+- `@tanstack/react-router@1.146.2` ✅
+- `@tanstack/router-plugin@1.146.3` ✅
+- `vite@7.3.1` ✅
+- `typescript@5.9.3` ✅
+- `@vitejs/plugin-react@5.1.2` ✅
+- `zustand@5.0.9` ✅
+
+**НЕ нужно**:
+- ❌ `vinxi` (TanStack Start теперь на Vite)
+- ❌ `@vinxi/react`
+- ❌ `@tanstack/start` (устаревший пакет)
 
 ### 1.2 Обновить конфигурацию Vite
 
@@ -190,13 +229,22 @@ rm -f app.config.ts
 
 ## Фаза 2: Настройка базы данных (1-2 дня)
 
-### 2.1 Установить Prisma
+### 2.1 Установить Prisma 7.2.0
 
 ```bash
-npm install @prisma/client
-npm install -D prisma
+# Prisma 7.2.0 - последняя версия с Rust-free клиентом
+npm install @prisma/client@latest   # v7.2.0
+npm install -D prisma@latest        # v7.2.0
+
+# Инициализация (создаст prisma/ директорию и .env)
 npx prisma init
 ```
+
+**Новое в Prisma 7**:
+- Rust-free клиент по умолчанию (быстрее, меньше размер)
+- Встроенная Prisma Studio в CLI
+- SQL Comments support (v7.1.0)
+- Возвращен флаг `--url` в CLI (v7.2.0)
 
 ### 2.2 Настроить схему БД
 
@@ -800,18 +848,43 @@ export function exportLocalStorageData() {
 
 ## Rollback план
 
-Если миграция не удалась:
+⚠️ **Важно**: Так как миграция выполняется в master ветке, откат требует жесткого reset к тегу.
+
+### Полный откат к pre-migration состоянию
 
 ```bash
-# Вернуться на main
-git checkout main
+# Вернуться к тегу pre-tanstack-start-migration
+git reset --hard pre-tanstack-start-migration
 
-# Удалить ветку миграции
-git branch -D feature/tanstack-start-migration
-
-# Откатить package.json если что-то установлено в main
-git checkout HEAD -- package.json package-lock.json
+# Восстановить зависимости
 npm install
+
+# Проверить что все работает
+npm run build
+npm run dev
+```
+
+### Частичный откат (только package.json)
+
+Если нужно откатить только зависимости:
+
+```bash
+# Откатить package.json и package-lock.json
+git checkout pre-tanstack-start-migration -- package.json package-lock.json
+
+# Переустановить зависимости
+npm install
+
+# Закоммитить откат
+git add package.json package-lock.json
+git commit -m "Rollback: Revert dependencies to pre-migration state"
+```
+
+### Удаление тега после успешной миграции
+
+```bash
+# После успешной миграции можно удалить тег
+git tag -d pre-tanstack-start-migration
 ```
 
 ---
@@ -863,5 +936,6 @@ npm install
 ---
 
 **Дата создания**: 2025-12-14
+**Последнее обновление**: 2026-01-10
 **Автор**: Konstantin Shylov (с помощью Claude Code)
-**Версия**: 1.0
+**Версия**: 2.0 (обновлено под master ветку + актуальные версии библиотек)
