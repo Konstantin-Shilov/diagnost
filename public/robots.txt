@@ -1,0 +1,7 @@
+# robots.txt for Diagnost - Burnout Diagnostic Tool
+
+User-agent: *
+Allow: /
+
+# Sitemap (update this URL when deployed)
+# Sitemap: https://your-domain.com/sitemap.xml

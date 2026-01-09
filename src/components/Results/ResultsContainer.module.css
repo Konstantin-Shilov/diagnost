@@ -131,7 +131,38 @@
 }
 
 .characteristicItem {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+.whyDangerousSection {
+  margin-top: 20px;
+}
+
+.whyDangerousTitle {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #dc3545;
+}
+
+.whyDangerousText {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.factSection {
+  margin-top: 20px;
+}
+
+.factTitle {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.factText {
+  margin: 0;
+  line-height: 1.6;
+  font-style: italic;
 }
 
 .recommendationsSection {
@@ -441,6 +472,30 @@
   }
 
   .characteristicItem {
+    font-size: 14px;
+  }
+
+  .whyDangerousSection {
+    margin-top: 16px;
+  }
+
+  .whyDangerousTitle {
+    font-size: 14px;
+  }
+
+  .whyDangerousText {
+    font-size: 14px;
+  }
+
+  .factSection {
+    margin-top: 16px;
+  }
+
+  .factTitle {
+    font-size: 14px;
+  }
+
+  .factText {
     font-size: 14px;
   }
 

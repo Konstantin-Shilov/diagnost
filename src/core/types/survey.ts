@@ -39,7 +39,14 @@ export interface GreenbergStage {
   stage: 1 | 2 | 3 | 4 | 5;
   name: string;
   description: string;
-  characteristics: string[];
+  bpsp: {
+    body: string;
+    emotions: string;
+    thoughts: string;
+    behavior: string;
+  };
+  whyDangerous: string;
+  fact: string;
 }
 
 export interface DiagnosticResult {

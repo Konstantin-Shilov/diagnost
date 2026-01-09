@@ -104,15 +104,48 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onEx
 
         <div>
           <Title size="sm" level="h5" variant="secondary" className={styles.characteristicsTitle}>
-            Характерные черты:
+            Что происходит на уровне БПСП:
           </Title>
           <ul className={styles.characteristicsList}>
-            {greenbergStage.characteristics.map((characteristic, index) => (
-              <li key={index} className={styles.characteristicItem}>
-                <Text as="span">{characteristic}</Text>
-              </li>
-            ))}
+            <li className={styles.characteristicItem}>
+              <Text as="span">
+                <strong>Тело:</strong> {greenbergStage.bpsp.body}
+              </Text>
+            </li>
+            <li className={styles.characteristicItem}>
+              <Text as="span">
+                <strong>Эмоции:</strong> {greenbergStage.bpsp.emotions}
+              </Text>
+            </li>
+            <li className={styles.characteristicItem}>
+              <Text as="span">
+                <strong>Мысли:</strong> {greenbergStage.bpsp.thoughts}
+              </Text>
+            </li>
+            <li className={styles.characteristicItem}>
+              <Text as="span">
+                <strong>Поведение:</strong> {greenbergStage.bpsp.behavior}
+              </Text>
+            </li>
           </ul>
+        </div>
+
+        <div className={styles.whyDangerousSection}>
+          <Title size="sm" level="h5" variant="secondary" className={styles.whyDangerousTitle}>
+            Почему это опасно:
+          </Title>
+          <Text variant="secondary" className={styles.whyDangerousText}>
+            {greenbergStage.whyDangerous}
+          </Text>
+        </div>
+
+        <div className={styles.factSection}>
+          <Title size="sm" level="h5" variant="secondary" className={styles.factTitle}>
+            Факт:
+          </Title>
+          <Text variant="secondary" className={styles.factText}>
+            {greenbergStage.fact}
+          </Text>
         </div>
       </div>
 

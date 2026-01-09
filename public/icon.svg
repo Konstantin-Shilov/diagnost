@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#007bff"/>
+
+  <!-- Stylized heart with pulse line -->
+  <g transform="translate(256, 256)">
+    <!-- Heart shape -->
+    <path d="M 0,-50 C -50,-110 -130,-110 -130,-30 C -130,20 0,110 0,110 C 0,110 130,20 130,-30 C 130,-110 50,-110 0,-50 Z"
+          fill="#ffffff" opacity="0.9"/>
+
+    <!-- Pulse line through heart -->
+    <path d="M -140,0 L -60,0 L -40,-30 L -20,30 L 0,-20 L 20,20 L 40,-10 L 60,0 L 140,0"
+          stroke="#ffffff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Circular accent -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.3"/>
+</svg>

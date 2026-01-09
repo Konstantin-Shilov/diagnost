@@ -185,30 +185,84 @@ export class PDFExportService {
       pdf.text(descLines, margin, yPos);
       yPos += descLines.length * 5 + 5;
 
-      // Characteristics
+      // BPSP
       pdf.setFontSize(11);
       pdf.setFont(fontFamily, "bold");
       pdf.setTextColor(31, 41, 55);
-      pdf.text("Характерные черты:", margin, yPos);
+      pdf.text("Что происходит на уровне БПСП:", margin, yPos);
       yPos += 6;
 
       pdf.setFont(fontFamily, "normal");
       pdf.setFontSize(10);
       pdf.setTextColor(75, 85, 99);
 
-      for (const char of result.greenbergStage.characteristics) {
-        // Check if we need a new page
-        if (yPos > pdf.internal.pageSize.getHeight() - 20) {
-          pdf.addPage();
-          yPos = margin;
-        }
-
-        const charLines = pdf.splitTextToSize(`• ${char}`, contentWidth - 5);
-        pdf.text(charLines, margin + 5, yPos);
-        yPos += charLines.length * 5 + 2;
+      // Check if we need a new page
+      if (yPos > pdf.internal.pageSize.getHeight() - 60) {
+        pdf.addPage();
+        yPos = margin;
       }
 
-      yPos += 5;
+      // Body
+      const bodyText = `• Тело: ${result.greenbergStage.bpsp.body}`;
+      const bodyLines = pdf.splitTextToSize(bodyText, contentWidth - 5);
+      pdf.text(bodyLines, margin + 5, yPos);
+      yPos += bodyLines.length * 5 + 2;
+
+      // Emotions
+      const emotionsText = `• Эмоции: ${result.greenbergStage.bpsp.emotions}`;
+      const emotionsLines = pdf.splitTextToSize(emotionsText, contentWidth - 5);
+      pdf.text(emotionsLines, margin + 5, yPos);
+      yPos += emotionsLines.length * 5 + 2;
+
+      // Thoughts
+      const thoughtsText = `• Мысли: ${result.greenbergStage.bpsp.thoughts}`;
+      const thoughtsLines = pdf.splitTextToSize(thoughtsText, contentWidth - 5);
+      pdf.text(thoughtsLines, margin + 5, yPos);
+      yPos += thoughtsLines.length * 5 + 2;
+
+      // Behavior
+      const behaviorText = `• Поведение: ${result.greenbergStage.bpsp.behavior}`;
+      const behaviorLines = pdf.splitTextToSize(behaviorText, contentWidth - 5);
+      pdf.text(behaviorLines, margin + 5, yPos);
+      yPos += behaviorLines.length * 5 + 5;
+
+      // Why Dangerous
+      if (yPos > pdf.internal.pageSize.getHeight() - 40) {
+        pdf.addPage();
+        yPos = margin;
+      }
+
+      pdf.setFontSize(11);
+      pdf.setFont(fontFamily, "bold");
+      pdf.setTextColor(220, 53, 69);
+      pdf.text("Почему это опасно:", margin, yPos);
+      yPos += 6;
+
+      pdf.setFont(fontFamily, "normal");
+      pdf.setFontSize(10);
+      pdf.setTextColor(75, 85, 99);
+      const dangerLines = pdf.splitTextToSize(result.greenbergStage.whyDangerous, contentWidth);
+      pdf.text(dangerLines, margin, yPos);
+      yPos += dangerLines.length * 5 + 5;
+
+      // Fact
+      if (yPos > pdf.internal.pageSize.getHeight() - 40) {
+        pdf.addPage();
+        yPos = margin;
+      }
+
+      pdf.setFontSize(11);
+      pdf.setFont(fontFamily, "bold");
+      pdf.setTextColor(30, 64, 175);
+      pdf.text("Факт:", margin, yPos);
+      yPos += 6;
+
+      pdf.setFont(fontFamily, "italic");
+      pdf.setFontSize(10);
+      pdf.setTextColor(75, 85, 99);
+      const factLines = pdf.splitTextToSize(result.greenbergStage.fact, contentWidth);
+      pdf.text(factLines, margin, yPos);
+      yPos += factLines.length * 5 + 10;
 
       // Check if we need a new page before recommendations
       if (yPos > pdf.internal.pageSize.getHeight() - 60) {
