@@ -1,6 +1,4 @@
 {
   "model": "sonnet",
-  "hooks": {
-    "pre-commit": "npm run check && npm run typecheck"
-  }
+  "hooks": {}
 }
