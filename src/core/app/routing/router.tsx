@@ -21,3 +21,8 @@ export const router = createRouter({
   scrollRestoration: true,
   scrollRestorationBehavior: "smooth",
 });
+
+// Export getRouter function for TanStack Start
+export function getRouter() {
+  return router;
+}

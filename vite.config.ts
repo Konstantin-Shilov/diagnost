@@ -1,6 +1,6 @@
 import postcssGlobalData from "@csstools/postcss-global-data";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
 import sri from "@vividlemon/vite-plugin-sri";
 // import fs from "fs";
 import { resolve } from "path";
@@ -9,7 +9,7 @@ import { defineConfig } from "vite";
 // import { analyzer } from "vite-bundle-analyzer";
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from "vite-plugin-svgr";
-import tsconfigPaths from "vite-tsconfig-paths";
+import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(async ({ mode }) => {
   // const isDev = mode === "development";
@@ -18,23 +18,24 @@ export default defineConfig(async ({ mode }) => {
   const isGitHubPagesBuild = process.env.GITHUB_PAGES === "true";
 
   return {
-    base: isGitHubPagesBuild ? "/diagnost/" : "/",
+    base: isGitHubPagesBuild ? "/diagnost" : "/",
     publicDir,
     plugins: [
       svgr({
         include: "**/*.svg",
       }),
 
-      // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
-      tanstackRouter({
-        target: "react",
-        autoCodeSplitting: true,
-        routesDirectory: "./src/core/app/routing/routes",
-        generatedRouteTree: "./src/core/app/routing/routeTree.gen.ts",
+      tsConfigPaths(),
+      tanstackStart({
+        router: {
+          entry: "./core/app/routing/router.tsx",
+          routesDirectory: "./core/app/routing/routes",
+          generatedRouteTree: "./core/app/routing/routeTree.gen.ts",
+        },
       }),
-      react(),
+      // react's vite plugin must come after start's vite plugin
+      viteReact(),
 
-      tsconfigPaths(),
       createHtmlPlugin({
         minify: false,
         inject: {
