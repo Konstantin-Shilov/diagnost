@@ -102,33 +102,35 @@ export const ResultsContainer: React.FC<ResultsContainerProps> = ({ result, onEx
           </div>
         </div>
 
-        <div>
-          <Title size="sm" level="h5" variant="secondary" className={styles.characteristicsTitle}>
-            Что происходит на уровне БПСП:
-          </Title>
-          <ul className={styles.characteristicsList}>
-            <li className={styles.characteristicItem}>
-              <Text as="span">
-                <strong>Тело:</strong> {greenbergStage.bpsp.body}
-              </Text>
-            </li>
-            <li className={styles.characteristicItem}>
-              <Text as="span">
-                <strong>Эмоции:</strong> {greenbergStage.bpsp.emotions}
-              </Text>
-            </li>
-            <li className={styles.characteristicItem}>
-              <Text as="span">
-                <strong>Мысли:</strong> {greenbergStage.bpsp.thoughts}
-              </Text>
-            </li>
-            <li className={styles.characteristicItem}>
-              <Text as="span">
-                <strong>Поведение:</strong> {greenbergStage.bpsp.behavior}
-              </Text>
-            </li>
-          </ul>
-        </div>
+        {greenbergStage.bpsp && (
+          <div>
+            <Title size="sm" level="h5" variant="secondary" className={styles.characteristicsTitle}>
+              Что происходит на уровне БПСП:
+            </Title>
+            <ul className={styles.characteristicsList}>
+              <li className={styles.characteristicItem}>
+                <Text as="span">
+                  <strong>Тело:</strong> {greenbergStage.bpsp.body}
+                </Text>
+              </li>
+              <li className={styles.characteristicItem}>
+                <Text as="span">
+                  <strong>Эмоции:</strong> {greenbergStage.bpsp.emotions}
+                </Text>
+              </li>
+              <li className={styles.characteristicItem}>
+                <Text as="span">
+                  <strong>Мысли:</strong> {greenbergStage.bpsp.thoughts}
+                </Text>
+              </li>
+              <li className={styles.characteristicItem}>
+                <Text as="span">
+                  <strong>Поведение:</strong> {greenbergStage.bpsp.behavior}
+                </Text>
+              </li>
+            </ul>
+          </div>
+        )}
 
         <div className={styles.whyDangerousSection}>
           <Title size="sm" level="h5" variant="secondary" className={styles.whyDangerousTitle}>

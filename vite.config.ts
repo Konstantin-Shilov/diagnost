@@ -23,6 +23,7 @@ export default defineConfig(async ({ mode }) => {
     plugins: [
       svgr({
         include: "**/*.svg",
+        exclude: [resolve(__dirname, publicDir)],
       }),
 
       tsConfigPaths(),

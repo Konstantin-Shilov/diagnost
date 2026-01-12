@@ -17,13 +17,9 @@ body {
 }
 
 body {
+  display: flex;
   overscroll-behavior: none;
   overflow-x: hidden;
-}
-
-#root {
-  display: flex;
-  min-height: var(--contentMinHeight, 100%);
 }
 
 * {
