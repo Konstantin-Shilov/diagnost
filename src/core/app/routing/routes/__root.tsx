@@ -1,8 +1,9 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { NotFound } from "@/common/shared/ui/NotFound";
+import { Preloader } from "@/common/shared/ui/Preloader";
 import { MainLayout } from "@/core/layout/MainLayout";
 
 // Глобальные стили
@@ -63,7 +64,8 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <Preloader />
+        <div id="root">{children}</div>
         <Scripts />
       </body>
     </html>
